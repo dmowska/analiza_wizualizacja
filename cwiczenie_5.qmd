@@ -1,0 +1,21 @@
+# Ćwiczenie 5 
+
+Przed wykonaniem ćwiczenia należy zapoznać się z rozdziałem 6 i 7 opisującym formy prezentacji wyników badań, w tym tworzenie posterów naukowych. 
+
+## Cel ćwiczenia
+
+Celem ćwiczenia jest zapoznanie się z formą prezentacji wyników badań w postaci posteru naukowego oraz opracowanie posteru przedstawiającego zmiany poziomu segregacji i zróżnicowania rasowo-etnicznego w wybranym hrabstwie w latach 1990-2020. 
+
+## Wykorzystane dane
+
+W ćwiczeniu zostaną wykorzystane wyniki analiz opracowanych w ramach ćwiczenia 4.
+
+## Zadanie
+
+-   Każda grupa przygotowuje 1 poster w formacie A0, pionowym przedstawiający zmiany poziomu segregacji i zróżnicowania rasowo-etnicznego w wybranym hrabstwie w latach 1990-2020.
+
+-   Poster należy zapisać w pliku PDF.
+
+-   Do przygotowania posteru można użyć dowolny program graficzny, np. Inkscape.
+
+-   Ważnym elementem przygotowania posteru jest odpowiednia selekcja materiału, który będzie pokazany na posterze.

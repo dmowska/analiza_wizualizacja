@@ -1,0 +1,29 @@
+# Ćwiczenie 10 
+
+ Przed wykonaniem ćwiczenia należy zapoznać się z rozdziałem 14 (przykład z kodem R). 
+
+## Cel ćwiczenia
+
+Celem ćwiczenia jest opisanie rasowo-etnicznej struktury ludności wybranego hrabstwa wykorzystując metryki krajobrazowe.
+
+## Wykorzystane dane
+
+> Uwaga! Wykonanie ćwiczenia wymaga klasyfikacji przygotowanej w trakcie ćwiczenia 8 (13 typów rasowo-etnicznej struktury ludności).
+
+-   geopaczka \[hrabstwo\]\_typy.gpkg zawierająca klasyfikację obszarów spisowych na 13 typów rasowo-etnicznej struktury ludności
+
+## Zadanie
+
+Proszę wykorzystać wybrane metryki krajobrazowe do opisania zmian typów rasowo-etnicznej struktury w wybranym hrabstwie.
+
+### Przygotowanie danych do analizy
+
+Geopaczka \[hrabstwo\]\_typy.gpkg zawiera wyniki klasyfikacji obszarów spisowych na 13 typów rasowo-etnicznej struktury ludności. Zastosowanie metod analizy krajobrazu wymaga przekształcenia danych wektorowych w dane rastrowe. W tym celu wykorzystana zostanie funkcja `rasterize()` z pakietu `terra`.
+
+W pliku \[hrabstwo\]\_typy.gpkg typy zróżnicowania rasowo-etnicznego zostały zakodowane skrótami literowymi (np. WM, HD). Przed wykonaniem rasteryzacji należy zamienić kody literowe na kody liczbowe, np. WL = 1, itd.
+
+## Wyniki
+
+-   mapa typów zróżnicowania rasowo-etniczego w formie rastrowej
+-   tabela zawierającą wartości wybranych wskaźników
+-   krótka interpretacja uzyskanych wyników

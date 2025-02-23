@@ -1,0 +1,93 @@
+# Ćwiczenie 8
+
+Przed wykonaniem ćwiczenia należy zapoznać się z rozdziałem 2 oraz 13 (przykład z kodem R). 
+ 
+## Cel ćwiczenia
+
+Celem ćwiczenia jest przeprowadzenie analizy zmian typów struktury rasowo-etnicznej ludności. Analiza obejmuje:
+
+-   klasyfikację obszarów spisowych na 13 typów struktury rasowo-etnicznej
+
+-   analizę zmian typów między latami.
+
+    -   Każdy uczestnik grupy wykonuje analizę zmian dla dwóch wybranych lat: 1990-2000, 2000-2010, 2010-2020 oraz 1990-2020.
+
+> Uwaga! Analiza zmian między latami (1990-2000, 2000-2010, 2010-2020, 1990-2020) wymaga zestawienia danych przygotowanych przez różnych członków grupy.
+
+## Wykorzystane dane
+
+-   \[hrabstwo\]\_tracts_areal.gpkg - w ćwiczeniu zostaną wykorzystane dane zagregowane do obszarów spisowych (ang. census tract) dla dwóch lat zestandaryzowane do granic z roku 2020.
+
+## Zadanie
+
+### Klasyfikacja danych dotyczących rasowo-etnicznej struktury ludności
+
+-   Wykorzystując dane dla dwóch wybranych lat należy sklasyfikować dane do 13 typów struktury rasowo-etnicznej. Poszczególne typy należy oznaczyć odpowiednimi skrótami literowymi - WL, WM itd. (skróty podane są w nawiasie poniżej).
+
+    -   Klasyfikację wykonujemy wykorzystując dane zestandaryzowane do granic z 2020 roku.
+
+-   W ćwiczeniu nie podano kodu w jaki sposób wykonać reklasyfikację. Ten etap trzeba wykonać samodzielnie na podstawie poniższych kryteriów klasyfikacji.
+
+-   Wynik wykonanej klasyfikacji należy zapisać w geopaczce \[hrabstwo\]\_typy.gpkg, nazwa warstwy: klasyfikacja_year1_year2, np. cls1990_2020 (lub inne dla których wykonano klasyfikację).
+
+    -   Warstwa wynikowa musi zawierać następujące pola: *GISJOIN* - identyfikator obszaru spisowego, *cls\[year1\] (np. cls90)* - klasy dla roku 1 (np. 1990), *cls\[year2\] (np. cls20)* - klasy dla roku 2 (np. 2020)
+    -   Geopaczkę zapisujemy w folderze results.
+
+#### Kryteria klasyfikacji {.unnumbered}
+
+1.  **Typ mało zróżnicowany:**
+
+***Kryterium: grupa dominująca stanowi \>80% ogólnej liczby ludności.***
+
+-   zdominowany przez białych (WL)
+-   zdominowany przez czarnych (BL)
+-   zdominowany przez Azjatów (AL)
+-   zdominowany przez Latynosów (HL)
+
+2.  **Typ średnio zróżnicowany (grupa dominująca stanowi 50%-80%):**
+
+***Kryterium: grupa dominująca stanowi \<50%-80%\> ogólnej liczby ludności.***
+
+-   zdominowany przez białych (WM)
+-   zdominowany przez czarnych (BM)
+-   zdominowany przez Azjatów (AM)
+-   zdominowany przez Latynosów (HM)
+
+3.  **Typ o dużym zróżnicowaniu (HD)**
+
+***Kryterium: żadna z grup nie przekracza 50%.***
+
+### Analiza zmian typów rasowo-etnicznej struktury
+
+-   oblicz liczbę obszarów spisowych według typów w roku X i Y.
+
+-   oblicz procent obszarów spisowych według typów w roku X i Y.
+
+-   wykonaj macierz przejść dla zmian między latami X-Y
+
+-   wykonaj mapy dla roku X i Y pokazujące rozmieszczenie typów struktury rasowo-etnicznej w hrabstwie
+
+    -   mapy należy zapisać w pliku svg w folderze results/figures
+
+## Wyniki
+
+-   geopaczka \[hrabstwo\]\_typy.gpkg z wynikami klasyfikacji na typy rasowo-etnicznej struktury ludności dla poszczególnych lat. Geopaczkę należy zapisać w folderze results.
+
+-   Wyniki numeryczne.
+
+    -   macierze przejść dla zmian między latami X-Y
+    -   liczba obszarów spisowych według typów w roku X i Y.
+    -   procent obszarów spisowych według typów w roku X i Y.
+
+-   Wizualizacja wyników.
+
+    -   mapy dla roku X i Y pokazujące rozmieszczenie typów struktury rasowo-etnicznej w hrabstwie
+
+-   Wszystkie mapy należy zapisać w pliku svg w folderze results/figures
+
+## Wyniki pracy grupowej
+
+-   mapy dla analizowanych lat pokazujące rozmieszczenie typów struktury rasowo-etnicznej w hrabstwie.
+-   macierze przejść dla zmian między latami 1990-2000, 2000-2010, 2010-2020, 1990-2020.
+-   liczba obszarów spisowych według typów w roku 1990, 2000, 2010, 2020.
+-   procent obszarów spisowych według typów w roku 1990, 2000, 2010, 2020.

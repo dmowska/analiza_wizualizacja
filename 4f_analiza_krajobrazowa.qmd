@@ -1,0 +1,166 @@
+# Metody analizy krajobrazowej 
+
+Poniższy przykład ilustruje zastosowanie metod analizy krajobrazowej w analizie rasowo-etnicznej struktury ludności
+
+```{r}
+#| message: false
+#| warning: false
+library(sf)
+library(dplyr)
+library(tidyverse)
+library(terra)
+library(kableExtra)
+```
+
+```{r}
+list_race = c("WHITE", "BLACK", "ASIAN", "HISPANIC", "AM", "OTHER")
+```
+
+## Dane
+
+```{r}
+cls_df <- st_read("data/data_geo/dc_results.gpkg", layer = "cls1990_2020")
+```
+
+### Przekodowanie wartości używając funkcji `recode()` z pakietu `dplyr` {.unnumbered}
+
+```{r}
+cls_df$cls90 = recode(cls_df$cls90, "WL"= 1, "WM" = 2, "BL" = 3, "BM" = 4, "AL" = 5, "AM" = 6, "HL" = 7, "HM" = 8, "IL" = 9, "IM" = 10, "OL" = 11, "OM" = 12, "HD" = 13)
+```
+
+### Rasteryzacja {.unnumbered}
+
+Funkcja `fasterize()` wymaga zdefiniowania kilku argumentów:
+
+-   sf - obiekt sf, który ma być zrasteryzowany
+-   raster - "pusta" warstwa rastrowa zawierająca parametry rastra - zasięg oraz rozdzielczość
+-   field - pole, wg którego ma być wykonana rasteryzacja
+-   fun - funkcja określająca operację wykonywaną w przypadku nakładających się poligonów.
+
+#### Stworzenie "pustego" rastra {.unnumbered}
+
+Zostanie utworzony raster o rozdzielczości 100 m o zasięgu pobranym z warstwy cls_df.
+
+```{r}
+library(terra)
+rast <- rast(cls_df, res = 100)
+rast
+```
+
+#### Stworzenie rastra zawierającego typy zróżnicowania rasowo-etnicznego w 1990 roku {.unnumbered}
+
+```{r}
+cls = rasterize(cls_df, rast, field = "cls90")
+```
+
+#### Wyświetlenie rastra zawierającego typy zróżnicowania rasowo-etnicznego w 1990 roku {.unnumbered}
+
+```{r}
+#kolory przypisane do poszczególnych typów zróżnicowania rasowo-etncznego w kolejności WL, WM, BL, BM, AL, AM, HL, HM, IL, IM, OL, OM, HD.
+cls_color =c("#FF8C00", "#FFD700", "#006400", "#32CD32", "#CD5555", "#FF6A6A", "#5D478B", "#9370DB", "#1C86EE", "#87CEFF", "#8B2500", "#CD661D","#8F8F8F")
+
+coltb <- data.frame(value=1:13, col = cls_color)
+
+#przypisanie tabeli kolorow do rastra
+coltab(cls) <- coltb
+
+#wyswietlanie rastra we właściwych kolorach
+plot(cls)
+```
+
+## Obliczanie metryk krajobrazowych
+
+Komórki rastra, którym przypisano poszczególne typy zróżnicowania rasowo-etnicznego tworzą określoną mozaikę rasowo-etniczną. Taką mozaikę można opisać za pomocą metryk krajobrazowych. W R metryki krajobrazowe można obliczyć używając pakietu `landscapemetrics`. Metryki krajobrazowe mogą być obliczone na poziomie pojedyńczych płatów (ang. *patch*), dla danej klasy (ang. *class*), dla całego krajobrazu (ang. *landscape*). Poniżej zostaną wyliczone wybrane metryki dla poszczególnych klas.
+
+```{r}
+library(landscapemetrics)
+```
+
+Wyświetlenie metryk krajobrazowych, które można wyliczyć na poziomie klasy. Tabela zawiera skróconą nazwę wskaźnika (*metric*), pełną nazwę wskaźnika (*name*), rodzaj metryki (*type*, np. aggregation metric, shape_metric), nazwę funkcji obliczającej dany wskaźnik w pakiecie landscapemetrics (*function_name*).
+
+```{r}
+class_metr = list_lsm(level = "class")
+```
+
+```{r}
+head(class_metr)
+```
+
+### Obliczanie metryk krajobrazowych dla typów zróżnicowania rasowo-etniczego w 1990 roku.
+
+Poniżej zostaną obliczone 4 metryki krajobrazowe:
+
+-   np - liczba płatów,
+-   lpi - stosunek powierzchni największego płata danego typu do powierzchni całego obszaru
+-   PLAND - procent obszaru zajęty przez dany typ zróżnicowania
+-   AI - poziom agregacji (0 – pełne rozproszenie, komórki tego samego typu nie graniczą ze sobą; 100 – jeden płat danego typu).
+
+```{r}
+lm = calculate_lsm(cls, level = ("class"), what = c("lsm_c_np", "lsm_c_lpi",  "lsm_c_pland", "lsm_c_ai"))
+```
+
+Zmiana formatu wyświetlania tabeli z "długiego" na "szeroki".
+
+```{r}
+library(tidyverse)
+lm_df = pivot_wider(lm[, c("class", "metric", "value")], names_from = metric, values_from = value)
+```
+
+Wartości metryk krajobrazowych w 1990 roku.
+
+```{r}
+lm_df
+```
+
+Tabela zawierająca kod liczbowy oraz tekstowy typu zróżnicowania rasowo-etnicznego
+
+```{r}
+cls_code = data.frame(cls = c("WL", "WM", "BL", "BM", "AL", "AM", "HL", "HM", "IL", "IM","OL","OM", "HD"), class = 1:13)
+results = merge(cls_code, lm_df, by = "class", all.x = TRUE)
+```
+
+Zapisanie metryk obliczonych dla poszczególnych klas do pliku.
+
+```{r}
+write.csv(results, "results/landscape_metrics.csv", row.names = FALSE)
+```
+
+### Obliczenie metryk krajobrazowych na poziomie całego obszaru
+
+Obliczenie liczby płatów
+
+```{r}
+np = lsm_l_np(cls)
+np
+```
+
+```{r}
+lpi = lsm_l_lpi(cls)
+lpi
+```
+
+## Prezentacja wyników
+
+```{r}
+plot(cls, main = "1990")
+```
+
+```{r}
+results %>% 
+  mutate_if(is.numeric, round, digits=2) %>% 
+  kbl() %>%
+  kable_classic_2(full_width = F) %>%
+  column_spec(1, background = cls_color)
+```
+
+### Interpretacja wyników
+
+Metryki krajobrazowe zastosowane do opisania krajobrazu zróżnicowania rasowo-etnicznego dostarczają dodatkowych informacji na temat przestrzennego rozkładu struktury rasowo-etnicznej na analizowanym obszarze. Typy o małym zróżnicowaniu rasowo-etnicznym to obszary zdominowane przez jedną grupę rasowo-etniczną, w których nie zachodzi integracja między grupami rasowo-etnicznymi. Typy o średnim i dużym zróżnicowaniu rasowym reprezentują obszary zamieszkałe przez kilka grup rasowo-etnicznych. Z punktu widzenia indywidualnego człowieka, obszar objęty jednym dużym płatem zdominowanym przez daną grupę rasowo-etniczną jest postrzegany jako obszar o większej segregacji niż obszar z większą liczbą małych płatów. Natomiast, duże płaty obszarów o dużym zróżnicowaniu rasowym wskazują, że integracja między poszczególnymi grupami rasowo-etnicznymi zachodzi na większą skalę przestrzenną.
+
+W 1990 roku District of Columbia podzielony był na 30 enklaw rasowo-etnicznych (płatów) należących do 5 typów zróżnicowania rasowo-etnicznego (WL, WM, BL, BM, HD):
+
+-   8 enklaw, zajmujących 66,6 % powierzchni należało do typów mało zróżnicowanych
+-   19 enkkaw, zajmujących 30,1% powierzchni należało do typów średnio zróżnicowanych
+-   4 enklawy, zajmujące 3,3% powierzchni należały do typu o dużym zróżnicowaniu rasowo-etnicznym.
+
+Największą powierzchnię (49%) zajmował typ "BL" - mało zróżnicowany zdominowany przez czarnych. Największa enklawa rasowo-etniczna zajmowała 49% powierzchni i należała do typu BL.

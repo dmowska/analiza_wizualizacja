@@ -1,0 +1,248 @@
+# Analiza zmian typów struktury rasowo-etnicznej ludności
+
+## Klasyfikacja rasowo-etnicznej struktury ludności
+
+Jedną z form prezentacji rasowo-etnicznej struktury ludności jest sklasyfikowanie jednostek agregacji, tak aby reprezentowały różne typy struktury rasowo-etnicznej ludności. Klasyfikacja stosowana jest np. dla każdego obszaru spisowego w mieście. Wyniki mogą być przedstawione w postaci tabeli pokazującej procentowy udział jednostek sklasyfikowanych jako dany typ lub mapy.
+
+Przykładem zastosowania klasyfikacji jest projekt Mixed Metro (https://mixedmetro.com/) dostarczający mapy typów zróżnicowania rasowo-etnicznego dla lat 1990-2020 dla obszaru Stanów Zjednoczonych.
+
+W nieniejszym przykładzie obszary spisowe zostaną sklasyfikowane do 13 typów wyróżnionych na podstawie procentowego udziału grup rasowo-etnicznych.
+
+### Kryteria klasyfikacji {.unnumbered}
+
+1.  **Typ mało zróżnicowany:**
+
+***Kryterium: grupa dominująca stanowi \>80% ogólnej liczby ludności.***
+
+-   zdominowany przez białych (WL)
+-   zdominowany przez czarnych (BL)
+-   zdominowany przez Azjatów (AL)
+-   zdominowany przez Latynosów (HL)
+
+2.  **Typ średnio zróżnicowany (grupa dominująca stanowi 50%-80%):**
+
+***Kryterium: grupa dominująca stanowi \<50%-80%\> ogólnej liczby ludności.***
+
+-   zdominowany przez białych (WM)
+-   zdominowany przez czarnych (BM)
+-   zdominowany przez Azjatów (AM)
+-   zdominowany przez Latynosów (HM)
+
+3.  **Typ o dużym zróżnicowaniu (HD)**
+
+***Kryterium: żadna z grup nie przekracza 50%.***
+
+## Przykład: Typy rasowo-etnicznej struktury ludności
+
+W poniższym przykładzie wykorzystano dane na poziomie obszarów spisowych dla 1990 i 2020 roku dla obszaru District of Columbia. Obszary spisowe zostały sklasyfikowane do 13 typów rasowo-etnicznej struktury ludności. Następnie przeanalizowano liczbę obszarów spisowych wg typów w danym roku oraz wykonano macierz przejść pokazująca zmiany między dwoma latami.
+
+### Dane
+
+```{r}
+library(sf)
+list_race <- c("WHITE", "BLACK", "ASIAN", "HISPANIC", "AM", "OTHER")
+
+dat90 = st_read("data/data_geo/dc_tract_areal.gpkg", layer = "tract_areal_1990")
+dat20 = st_read("data/data_geo/dc_tract_areal.gpkg", layer = "tract_areal_2020")
+```
+
+```{r}
+perc90 <- dat90[,list_race]/dat90$POP
+perc20 <- dat20[,list_race]/dat20$POP
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+cls90 <-  perc90 %>% 
+  mutate(
+    cls90 = case_when(
+      WHITE > 0.8 ~ "WL",
+      WHITE >=0.5 & WHITE <= 0.8 ~ "WM",
+      BLACK > 0.8 ~ "BL",
+      BLACK >=0.5 & BLACK <= 0.8 ~ "BM",
+      ASIAN > 0.8 ~ "AL",
+      ASIAN >=0.5 & ASIAN <= 0.8 ~ "AM",
+      HISPANIC > 0.8 ~ "HL",
+      HISPANIC >=0.5 & HISPANIC <= 0.8 ~ "HM",
+      AM > 0.8 ~ "IL",
+      AM >=0.5 & AM <= 0.8 ~ "IM",
+      OTHER > 0.8 ~ "OL",
+      OTHER >=0.5 & OTHER <= 0.8 ~ "OM",
+      WHITE < 0.5 & BLACK < 0.5 & ASIAN < 0.5 & HISPANIC < 0.5 & AM < 0.5 & OTHER < 0.5 ~ "HD"),
+    .keep = "none"
+  )
+
+cls20 <-  perc20 %>% 
+  mutate(
+    cls20 = case_when(
+      WHITE > 0.8 ~ "WL",
+      WHITE >=0.5 & WHITE <= 0.8 ~ "WM",
+      BLACK > 0.8 ~ "BL",
+      BLACK >=0.5 & BLACK <= 0.8 ~ "BM",
+      ASIAN > 0.8 ~ "AL",
+      ASIAN >=0.5 & ASIAN <= 0.8 ~ "AM",
+      HISPANIC > 0.8 ~ "HL",
+      HISPANIC >=0.5 & HISPANIC <= 0.8 ~ "HM",
+      AM > 0.8 ~ "IL",
+      AM >=0.5 & AM <= 0.8 ~ "IM",
+      OTHER > 0.8 ~ "OL",
+      OTHER >=0.5 & OTHER <= 0.8 ~ "OM",
+      WHITE < 0.5 & BLACK < 0.5 & ASIAN < 0.5 & HISPANIC < 0.5 & AM < 0.5 & OTHER < 0.5 ~ "HD"),
+     .keep = "none"
+  )
+
+cls_df = cbind(dat20[, c("GISJOIN", "geom")], cls90, cls20)
+#st_write(cls_df, "data/data_geo/dc_results.gpkg", layer = "cls1990_2020")
+```
+
+### Obliczenie liczby obszarów spisowych według typu struktury rasowo-etnicznej ludności.
+
+#### Liczba obszarów spisowych w 1990 roku według typów. {.unnumbered}
+
+```{r}
+table(cls_df$cls90)
+```
+
+Funkcja `prob.table()` pozwala na obliczenie odsetka obszarów według danego typu, jeśli wynik wymnożymy przez 100 otrzymamy procenty. Funkcja `round()` zaokrągli wynik do określonej liczby miejsc po przecinku
+
+```{r, eval=FALSE}
+tab90 <- prop.table(table(cls_df$cls90))*100
+round(tab90, 1)
+```
+
+Ten sam wynik co powyżej (udział procentowy) otrzymamy także wykonując następujące obliczenia:
+
+```{r, eval=FALSE}
+(table(cls_df$cls90)/sum(table(cls_df$cls90)))*100
+```
+
+Wyniki w dwóch powyższych tabelach pokazują, że w roku 1990 75 obszarów (co stanowi 38.5%) zostało sklasyfikowanych jako typ o dużym zróżnicowaniu (żadna grupa nie stanowiła powyżej 50%), a 69 obszarów (35.4%) jako obszary średnio zróżnicowane zdominowane przez białych.
+
+#### Liczba obszarów spisowych w 2020 roku według typów. {.unnumbered}
+
+```{r}
+table(cls_df$cls20)
+```
+
+```{r}
+tab20 <- prop.table(table(cls_df$cls20))*100
+round(tab20, 1)
+```
+
+### Macierz przejść (transition matrix)
+
+Do określenia zmian typów między latami wykorzystuje się macierz przejść (ang. *transition matrix*). Macierz przejść pokazuje ile jednostek zmieniło typ między jednym a drugim rokiem. Wartości na przekątnej pokazują ile jednostek nie zmieniło typu między jednym a drugim rokiem.
+
+```{r}
+tab <- table(cls_df$cls90, cls_df$cls20)
+tab
+```
+
+W powyższej tabeli wiersz zawiera dane dla roku 1990, a kolumny dla roku 2020. Np. wartość 12 (ostatni rząd oraz 4 kolumna) oznacza, że 12 obszarów spisowych sklasyfikowanych w roku 1990 jako WM (mało zróżnicowane zdominowane przez białych) w roku 2020 zmieniło swój typ na HD (duże zróżnicowanie, żadna grupa nie stanowi więcej niż 50%).
+
+Jeśli zsumujemy wartości w wierszach (rowSums) to otrzymamy liczbę obszarów spisowych według typów w 1990 roku (to samo otrzymamaliśmy wykonując polecenie `table(cls_df$cls90)`)
+
+```{r}
+rowSums(tab)
+```
+
+Jeśli zsumujemy wartości w wierszach (colSums) to otrzymamy liczbę obszarów spisowych według typów w 2020 roku (to samo otrzymamaliśmy wykonując polecenie `table(cls_df$cls10)`)
+
+```{r}
+colSums(tab)
+```
+
+Poniższa tabela przedstawia odsetek obszarów spisowych (np. 16.4% w 1990 zostało sklasyfikowanych jako HD, a w 2020 jako AM; 23.6% obszarów spisowych w roku 1990 oraz 20120 było sklasyfikowanych jako WM).
+
+```{r}
+round(prop.table(table(cls_df$cls90, cls_df$cls20))*100, 1)
+```
+
+## Wizualizacja wyników
+
+Dwie pierwsze ryciny pokazują przestrzenne rozmieszczenie typów struktury rasowo-etnicznej z zastosowaniem domyślnych kolorów (ten sam typ ma różny kolor w roku 1990 oraz w roku 2020). Mapy te nie nadają się do porównania między latami. Aby mapy były porównywalne muszą być wyświetlane w tych samych kolorach (dany typ musi mieć ten sam kolor na obu mapach)
+
+```{r}
+plot(cls_df["cls90"])
+```
+
+```{r}
+plot(cls_df["cls20"])
+```
+
+### Ujednolicenie kolorów
+
+Pakiet `colorpicker` dostarcza narzędzie do wyboru kolorów (https://cran.r-project.org/web/packages/colourpicker/vignettes/colourpicker.html) Po zainstalowaniu pakietu należy wybrać Addins - Colour Picker.
+
+Wektor *cls_color* zawiera kolory przypisane poszczególnym typom struktury rasowo-etnicznej (Uwaga! Typy muszą być wymienione alfabetycznie).
+
+```{r}
+cls_color <- c("AL"= "#CD5555", "AM"= "#FF6A6A", "BL"= "#006400", "BM"= "#32CD32", "HD"= "#8F8F8F", "HL"= "#5D478B", "HM"= "#9370DB", "IL" = "#1C86EE", "IM" = "#87CEFF", "OL" = "#8B2500", "OM" = "#CD661D", "WL"= "#FF8C00", "WM"= "#FFD700")
+```
+
+W następnym kroku należy wybrać te typy struktury, które wystąpiły w danym roku.
+
+```{r}
+col90 <- cls_color[names(cls_color)%in%unique(cls_df$cls90)]
+col20 <- cls_color[names(cls_color)%in%unique(cls_df$cls20)]
+```
+
+### Wizualizacja z pakietem tmap
+
+W poniższym przykładzie do wizualizacji typów zróżnicowania rasowo-etnicznego wykorzystano pakiet `tmap`.
+
+```{r}
+#| message: false
+#| warning: false
+library(tmap)
+
+mapa90 <- tm_shape(cls_df) + 
+  tm_polygons(fill = "cls90", 
+              fill.scale = tm_scale(values = col90),
+              fill.legend = tm_legend(title = "Typy", frame = FALSE, position = tm_pos_in("left", "bottom"))) + 
+  tm_layout(legend.text.size = 0.9,
+            legend.title.size=1.2,
+            frame = FALSE)
+
+mapa20 <- tm_shape(cls_df) + 
+  tm_polygons(fill = "cls20", 
+              fill.scale = tm_scale(values = col20),
+              fill.legend = tm_legend(title = "Typy", frame = FALSE, position = tm_pos_in("left", "bottom"))) + 
+  tm_layout(legend.text.size = 0.9,
+            legend.title.size=1.2,
+            frame = FALSE)
+
+tmap_arrange(mapa90, mapa20, ncol = 2)
+```
+
+### Wizualizacja z pakietem ggplot2
+
+Poniższy przykład pokazuje, jak w R wyświetlić dane dla 1990 oraz 2020 roku w tej samej palecie u używając pakietu ggplot2.
+
+```{r}
+library(ggplot2)
+library(patchwork)
+p1 <- ggplot(data = cls_df) +
+  geom_sf(aes(fill = cls90)) +
+  scale_fill_manual(values = col90) + 
+  labs(title = "District of Columbia, 1990") + 
+  theme_bw() +
+  theme(legend.position="bottom") + 
+  guides(fill = guide_legend(nrow = 2))
+
+p2 <- ggplot(data = cls_df) +
+  geom_sf(aes(fill = cls20)) +
+  scale_fill_manual(values = col20) + 
+  labs(title = "District of Columbia, 2020") + 
+  theme_bw() +
+  theme(legend.position="bottom") + 
+  guides(fill = guide_legend(nrow = 2))
+  
+
+#wyswietlenie wykresow obok siebie
+p1 + p2
+```

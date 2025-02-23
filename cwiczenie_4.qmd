@@ -1,0 +1,77 @@
+# Ćwiczenie 4
+
+W ćwiczeniu zostaną **wykorzystane tradycyjnych miary segregacji oraz zróżnicowania rasowo-etnicznego do analizy rasowo-etnicznej struktury ludności w wybranym hrabstwie**. Przed wykonaniem ćwiczenia należy zapoznać się z rozdziałem 2 oraz 10 (przykład z kodem R). 
+
+
+## Cel ćwiczenia
+
+Celem ćwiczenia jest scharakteryzowanie zróżnicowania rasowo-etnicznego oraz segregacji rasowo-etnicznej w wybranym hrabstwie w roku X oraz porównanie wartości wskaźników obliczonych na różnych poziomach agregacji (bloki spisowe vs. obszary spisowe)
+
+## Wykorzystane dane
+
+-   Dane o strukturze rasowo-etnicznej na poziomie bloków spisowych (plik nazwahrabstwa_blocks_year_attr.csv)
+-   Dane o strukturze rasowo-etnicznej na poziomie obszarów spisowych (plik nazwahrabstwa_tracts_year_attr.csv)
+
+## Zadanie
+
+-   Obliczenie miar segregacji rasowo-etnicznej ($H$, $D$) oraz zróżnicowania rasowo-etnicznego ($E$, $E_{std}$) na podstawie danych z **bloków spisowych (blocks)**
+
+    -   Proszę obliczyć wskaźnik $D$ dla grup: WB – biali/czarni, WA – biali/Azjaci, WL – biali/Latynosi, BL - Czarni/Latynosi, AL - Azjaci/Latynosi, AB - Azjaci/Czarni.
+
+-   Obliczenie miar segregacji rasowej ($H$, $D$) oraz zróżnicowania rasowego ($E$, $E_{std}$) na podstawie danych z **obszarów spisowych (census tract)**
+
+    -   Proszę obliczyć wskaźnik $D$ dla grup: WB – biali/czarni, WA – biali/Azjaci, WL – biali/Latynosi, BL - Czarni/Latynosi, AL - Azjaci/Latynosi, AB - Azjaci/Czarni.
+
+## Wyniki
+
+Wynikiem ćwiczenia będą 4 tabele zestawiające wyniki dla lat 1990, 2000, 2010, 2020:
+
+-   Tabela 1. Liczba ludności w hrabstwie X w latach ....
+-   Tabela 2. Procentowy udział poszczególnych grup rasowo-etnicznych w hrabstwie X w latach ...
+-   Tabela 3. Miary zróżnicowania i segregacji rasowo-etnicznej na poziomie bloków spisowych w hrabstwie X w latach...
+-   Tabela 4. Miary zróżnicowania i segregacji rasowo-etnicznej na poziomie obszarów spisowych w hrabstwie X w latach...
+
+Tabele te należy zapisać w pliku csv lub arkuzu kalkulacyjnym. Będą one wykorzystane w poźniejszych ćwiczeniach do przygotowania posteru oraz prezentacji.
+
+```{r}
+#| echo: false
+library(kableExtra)
+dt = data.frame(ROK =c("X", "Y"), POP = c("", ""), BIALI = c("", ""), CZARNI = c("", ""), AZJACI = c("", ""), RDZENNI_AMERYKANIE = c("", ""), POZOSTALI = c("", ""), LATYNOSI = c("", ""))
+
+kbl(dt, caption = "Liczba ludności w hrabstwie X") %>%
+  kable_paper("striped", full_width = F)
+```
+
+```{r}
+#| echo: false
+library(kableExtra)
+dt = data.frame(ROK =c("X", "Y"), BIALI = c("", ""), CZARNI = c("", ""), AZJACI = c("", ""), RDZENNI_AMERYKANIE = c("", ""), POZOSTALI = c("", ""), LATYNOSI = c("", ""))
+
+
+kbl(dt, caption = "Procentowy udział grup rasowo-etnicznych w hrabstwie X") %>%
+  kable_paper("striped", full_width = F)
+```
+
+```{r}
+#| echo: false
+library(kableExtra)
+dt = data.frame(ROK =c("X", "Y"), 
+                E = c("", ""), Estd = c("", ""), 
+                H = c("", ""), Dwb = c("", ""), Dwl = c("", ""), Dwa = c("", ""), Dbl = c("", ""))
+
+
+kbl(dt, caption = "Miary zróżnicowania i segregacji na poziomie bloków spisowych") %>%
+  kable_paper("striped", full_width = F)
+```
+
+```{r}
+#| echo: false
+library(kableExtra)
+dt = data.frame(ROK =c("X", "Y"), 
+                E = c("", ""), Estd = c("", ""), 
+                H = c("", ""), Dwb = c("", ""), Dwl = c("", ""), Dwa = c("", ""), Dbl = c("", ""))
+
+
+kbl(dt, caption = "Miary zróżnicowania i segregacji na poziomie obszarów spisowych") %>%
+  kable_paper("striped", full_width = F)
+```

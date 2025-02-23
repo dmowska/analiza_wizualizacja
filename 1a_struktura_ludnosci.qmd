@@ -1,0 +1,34 @@
+# Rasowo-etniczna struktura ludności
+
+Stosowane w literaturze pojęcie struktury demograficznej ludności oznacza podział społeczeństwa ze względu na wiek, płeć, przynależność zawodową, narodowościowo-etniczną, czy wyznaniową. W zależności od wybranej cechy stosuje się pojęcia struktury wyznaniowej, struktury zawodowej, itd. Pojęcie **struktury rasowo-etnicznej** odnosi się do podziału społeczeństwa na **kategorie rasowo-etniczne**.
+
+## Pojęcie rasy w Stanach Zjednoczonych
+
+Pojęcie rasy w Stanach Zjednoczonych zawsze odzwierciedlało społeczną definicję rasy bez próby definiowania jej w odniesieniu biologicznym, antropologicznym czy genetycznym.
+
+Klasyfikacja ras stosowana w Stanach Zjednoczonych zmieniała na się na przestrzeni lat, tak aby odzwierciedlać, nie tylko zmiany demograficzne, ale także polityczne i społeczne zachodzące w Stanach Zjednoczonych. Np. w Spisie od 1990 roku Rdzenni Hawajczycy oraz Azjaci stanowili jedną wspólną kategorię. Ponadto, od 2000 roku w Spisach Ludności pojawiła się możliwość zadeklarowania przynależności do więcej niż jednej grupy rasowej.
+
+## Kategorie rasowe i etniczne
+
+W Stanach Zjednoczonych obowiązuje klasyfikacja rasowo-etniczna zgodna z wytycznymi z 1997 roku Amerykańskiego Biura Zarządzania i Budżetu (ang. *U.S. Office of Management and Budget (OMB)*). Wytyczne te wymagają uwzględnienia co najmniej pięciu kategorii rasowych oraz dwóch kategorii etnicznych.
+
+Podział według pochodzenia etnicznego jest niezależny od podziału na kategorie rasowe. Podczas Spisów Ludności w Stanach Zjednoczonych, respondentowi zadawane są dwa oddzielne pytania: (1) Pytanie o rasę; (2) Pytanie o pochodzenie etniczne.
+
+![](figures/rasy.png)
+
+### Kategorie rasowe
+
+-   ***White*** (Biali)
+-   ***Black or African American*** (Czarni)
+-   ***American Indian or Alaska Native*** (Rdzenni Amerykanie)
+-   ***Asian*** (Azjaci)
+-   ***Native Hawaiian or Other Pacific Islander*** (Rdzenni Hawajczycy)
+
+Więcej informacji: <https://www.census.gov/topics/population/race/about.html>
+
+### Kategorie etniczne
+
+Każda z kategorii rasowych może być ponadto podzielona na 2 kategorie etniczne określające przynależność (lub nie) do grupy Latynosów. Wyróżnia się:
+
+-   ***Hispanic or Latino origin***
+-   ***Not Hispanic or Latino origin***

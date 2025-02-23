@@ -1,0 +1,43 @@
+# Prezentacja multimedialna
+
+## Struktura prezentacji
+
+Prezentacja multimedialna powinna składać się z następujących części:
+
+-   Slajd tytułowy (Tytuł + Autor)
+-   Wprowadzenie do tematyki - o czym będzie prezentacja
+-   Cel badań
+-   Dane i metody
+-   Wyniki
+-   Podsumowanie i wnioski
+
+## O czym pamiętać przygotowując prezentację?
+
+> *„It’s quite simple: a PowerPoint presentation should have ten slides, last no more than twenty minutes, and contain no font smaller than thirty points.”* Guy Kawasaki
+
+-   Dobór materiału do prezentacji
+
+    -   przed przystąpieniem do przygotowania prezentacji należy przemysleć, co chce się powiedzieć i jak to zrobić w sposób, który przyciągnie uwagę
+    -   prezentacje przejrzyste, angażujące i dobrze przygotowane pod kątem wizualnym zostaną lepiej zapamiętane
+
+-   Ilość informacji i tekstu w prezentacji
+
+    -   Prezentacja powinna zawierać najważniejsze punkty i hasła-klucze; wnioski powinny być sformułowane jako równoważniki zdań.
+
+-   Wizualizacja treści
+
+    -   wykorzystanie infografik, ilustracji, wykresów, które w prosty sposób przekazują informację
+    -   wykres jest lepszy niż tabela
+
+-   Prostota i czytelność
+
+    -   Krótkie nagłówki - zastosowanie zwięzłych nagłówków, które jasno komunikują treść slajdu
+    -   Spójna grafika - zastosowanie jednego stylu graficznego: jednolita kolorystyka, spójna czcionka.
+    -   Wielkość czcionki - należy zadbać o odpowiednio dużą czcionkę
+    -   Kolory - należy zadbać o odpowiedni kontrast i unikac połączeń o niskim kontraście (zółte napisy na białym tle)
+
+-   Prezentacja multimedialna jest uzupełnieniem wypowiedzi.
+
+    -   nie wszystko o czym mówimy musi być umieszczone na slajdzie
+    -   należy unikać przeciążania slajdów tekstem lub grafikami.
+    -   **Im mniej tekstu w prezentacji tym lepiej**

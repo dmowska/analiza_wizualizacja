@@ -1,0 +1,33 @@
+# Źródło danych
+
+## Spis Ludności 
+
+-   Dane dotyczące rasowo-etnicznej struktury ludności w Stanach Zjednoczonych zbierane są w ramach Spisów Ludności, organizowanych co 10 lat (ostatni spis miał miejsce w 2020 roku)
+
+-   Najlepszym źródłem danych pochodzących ze Spisów Ludności jest projekt National Historical Geographic Information System– NHGIS <http://nhgis.org>
+
+-   Dane Spisu Ludności USA są udostępniane w postaci danych zagregowanych do jednostek spisowych. W USA obowiązuje kilka poziomów agregacji danych.
+
+-   Granice jednostek agregacji zmieniają się między Spisami Ludności
+
+## Poziomy agregacji danych
+
+-   *Stany* (ang. *states*)
+-   *Hrabstwa* (ang. *counties*)
+-   *Obszary spisowe* (ang. *census tracts*) - najczęściej wykorzystywane jednostki agregacji danych
+-   *Grupy bloków spisowych* (ang. *block groups*)
+-   *Bloki spisowe* (ang. *blocks*) - najmniejsze jednostki agregacji danych
+
+![](figures/us_aggregtion.png)
+
+<https://learn.arcgis.com/en/related-concepts/united-states-census-geography.htm>
+
+## NHGIS - National Historical GIS
+
+-   Projekt udostępniający dane ze Spisów Ludności z lat 1790-2010
+-   Dane tabelaryczne na różnym poziomie agregacji
+-   Dane GIS (granice jednostek spisowych)
+-   Dane tabelaryczne oraz GIS posiadają wspólne ID ułatwiające połączenie obu źródeł danych.
+-   Pobieranie danych wymaga utworzenia konta oraz zalogowania. Dane są udostępniane bezpłatnie.
+
+![](figures/nhgis.png)

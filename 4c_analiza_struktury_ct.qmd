@@ -1,0 +1,246 @@
+# Analiza rasowo-etnicznej struktury ludności na poziomie obszarów spisowych
+
+## Przykład
+
+W przykładzie przeprowadzono analizę rasowo-etnicznej struktury ludności dla obszaru Distric of Columbia dla 1990 roku. W tym celu zostaną wykorzystane dane zagregowane do obszarów spisowych (ang. *census tract*) dla District of Columbia dla roku 1990 oraz 2020.
+
+Analiza obejmuje kilka etapów:
+
+-   Etap 1. Standaryzacja danych między latami
+-   Etap 2. Obliczenie procentowego udziału grup rasowo-etnicznych w każdym obszarze spisowym
+-   Etap 3. Obliczenie miar zróżnicowania rasowo-etnicznego w każdym obszarze spisowym
+
+### Etap 1. Standaryzacja granic między rokiem 1990 a 2020 {.unnumbered}
+
+Granice obszarów spisowych zmieniały się pomiędzy latami. Aby analiza porównawcza między latami 1990 a 2020 była możliwa, dane z roku 1990 trzeba najpierw prztransformować do granic z 2020 roku. W tym celu zostanie wykorzystana metoda powierzchniowo-wagowa. Wyniki tego etapu zostaną zapisane w geopaczce dc_tracts_areal.gpkg.
+
+```{r}
+#| message: false
+#| warning: false
+library(sf)
+library(dplyr)
+```
+
+```{r}
+list_race = c("WHITE", "BLACK", "ASIAN", "HISPANIC", "AM", "OTHER")
+```
+
+```{r}
+#| message: false
+#| warning: false
+library(sf)
+dat90 = st_read("data/data_geo/dc_tracts_attr.gpkg", layer = "tract_attr_1990")
+dat20 = st_read("data/data_geo/dc_tracts_attr.gpkg", layer = "tract_attr_2020")
+```
+
+```{r}
+#target units to granice z 2020 roku bez danych atrybutowych
+target_units <- dat20[, c("GISJOIN")]
+
+#source units to dane w granicach z 1990 roku
+source_units <- dat90[, list_race]
+```
+
+```{r}
+head(target_units)
+```
+
+```{r}
+head(source_units)
+```
+
+Do przeliczenia danych z wykorzystaniem metody powierzchniowo-wagowej wykorzystamy funkcję `st_interpolate_aw()` z pakietu `sf`. Funkcja ta wymaga podania:
+
+-   obiektu klasy sf zawierającego dane, które chcemy przeliczyć (*source_units*),
+-   obiektu klasy sf zawierającego zestaw granic, do którego mają zostać przeliczone atrybuty (*target_units*)
+
+W przypadku danych dotyczących liczby ludności należy podać argument *extensive = TRUE*. Argument *keep_NA = TRUE* oznacza, że zostaną zachowane wszystkie poligony z obiektu *target_units* (także te z brakiem wartości danych).
+
+```{r}
+library(sf)
+result90_20 = st_interpolate_aw(source_units, target_units, extensive = TRUE, keep_NA = TRUE, na.rm = TRUE)
+```
+
+> Obiekt *result90_20* zawiera dane z roku 1990 przeliczone do granic z roku 2020. Funkcja `st_interpolate_aw()` z pakietu `sf` zwraca wynik w postaci obiektu klasy `sf`.
+
+```{r}
+head(result90_20)
+```
+
+W kolejnym etapie ponownie do obiektu wynikowego *result90_20* przypiszemy identyfikator *GISJOIN* dla obszarów spisowych. Uwaga! Obiekt *result90_20* to granice z 2020 roku, dlatego należy przypisać pole *GISJOIN* z warstwy *dat20*
+
+```{r}
+result90_20$GISJOIN = dat20$GISJOIN
+```
+
+W kolejnym etapie ponownie dla każdego obszaru spisowego wyliczymy liczbę ludności
+
+```{r}
+result90_20$POP = rowSums(result90_20[,list_race, drop = TRUE], na.rm = TRUE)
+```
+
+```{r}
+result90_20 = result90_20[, c("GISJOIN", list_race, "POP")]
+```
+
+Zapisanie danych atrybutowych z 1990 roku w granicach z 2020 roku (przy wykonywaniu analizy dla innego roku podać nazwę layer = tract_areal\_\[rok\])
+
+```{r}
+#| eval: false
+st_write(result90_20, "data/data_geo/dc_tract_areal.gpkg", layer = "tract_areal_1990", append = TRUE)
+```
+
+Dodanie danych z 2020 roku
+
+```{r}
+#| eval: false
+st_write(dat20, "data/data_geo/dc_tract_areal.gpkg", layer = "tract_areal_2020", append = TRUE)
+```
+
+### Etap 2. Udział procentowy grup rasowo-etnicznych w każdym obszarze spisowym {.unnumbered}
+
+Dalsza część analizy zostanie wykonana używając danych zapisanych w pliku data_geo/dc_tract_areal.gpkg. Są to dane z 1990 roku na poziomie obszarów spisowych "przeliczone" do granic z roku 2020.
+
+```{r}
+library(sf)
+list_race <- c("WHITE", "BLACK", "ASIAN", "HISPANIC", "AM", "OTHER")
+dat_ct = st_read("data/data_geo/dc_tract_areal.gpkg", layer = "tract_areal_1990")
+```
+
+```{r}
+#obliczenie odsetka ras dla poszczegolnych obszarow spisowych (dane wejsciowe do obliczenia entropii)
+perc_ct <- dat_ct[,list_race]/dat_ct$POP
+perc_ct$geometry<-NULL
+```
+
+### Etap 3. Miary zróżnicowania rasowo-etnicznego {.unnumbered}
+
+```{r}
+#proportions - wektor zawierający odsetek poszczególnych ras w ogólnej liczbie ludności (wartości od 0 do 1)
+#base - podstawa logarytmu, domyslnie exp(1) oznacza obliczenie logarytmu naturalnego 
+entropy_fnc = function(proportions, base = exp(1)) {
+  entr = -sum(ifelse(proportions > 0, proportions * log(proportions, base = base), 0))
+  return(entr)
+}
+```
+
+```{r}
+#obliczenie entopii dla każdego obszaru spisowego
+ent <- apply(perc_ct, 1, entropy_fnc)
+```
+
+```{r}
+#obliczenie entopii standaryzowanej dla każdego obszaru spisowego
+estd <- ent/log(6)
+```
+
+```{r}
+#obliczenie liczby Hilla 
+hill <- exp(1)^ent
+```
+
+## Wizualizacja wyników z pakietem tmap
+
+```{r}
+#stworzenie ramki danych z udzialem procentowym i miarami zroznicowania
+out_ct = data.frame(perc_ct, ent, estd, hill)
+```
+
+Przekształcenie obiektu `out_ct` na obiekt przestrzenny
+
+```{r}
+out_ct = cbind(dat_ct[, 1], out_ct)
+```
+
+Zapisanie wyników
+
+```{r}
+#| eval: false
+st_write(out_ct, "data/data_geo/dc_results.gpkg", layer = "out_ct_1990")
+```
+
+### Miary zróżnicowania rasowo-etnicznego 
+
+```{r}
+#| message: false
+#| warning: false
+library(tmap)
+
+#w zaleznosci od wersji tmap yl_or_br lub YlOrBr, lub oranges vs. Oranges
+# argument breaks pozwala na ustawienie zakresu przedzialow
+hill_map <- tm_shape(out_ct) + 
+  tm_polygons(fill = "hill", 
+              fill.scale = tm_scale(values = "-viridis", breaks = c(0,1,2,3,4,5)),
+              fill.legend = tm_legend(title = "Hill", frame = FALSE, position = tm_pos_in("left", "bottom"))) + 
+  tm_layout(legend.text.size = 0.9,
+            legend.title.size=1.2,
+            frame = FALSE)
+
+hill_map
+```
+
+```{r}
+tmap_save(hill_map, "results/dc_hill1990.svg")
+```
+
+### Rozmieszczenie grup rasowo-etnicznych
+
+Obiekt *out_ct* zostanie przekształcony do formatu "długiego", a następnie przy użyciu argumentu `tm_facets_wrap()` zostaną utworzone mapy pokazujące procentowy udział białych, czarnych, Azjatów oraz Latynosów. Mapy zostaną także zapisane do pliku o rozszerzeniu .svg.
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+race_data <- out_ct %>% 
+  select(c(WHITE, BLACK, ASIAN, HISPANIC)) %>% 
+  pivot_longer(cols = c(WHITE, BLACK, ASIAN, HISPANIC),
+               names_to = "RACE",
+               values_to = "PERC")
+  
+```
+
+```{r}
+#| message: false
+#| warning: false
+race_maps <- tm_shape(race_data ) +
+  tm_polygons(fill = "PERC",
+              fill.scale = tm_scale(values = "oranges"),
+              fill.legend = tm_legend(title = "Udział procentowy", orientation = "landscape", frame = FALSE, position = tm_pos_out("center", "bottom"))) +
+  tm_facets_wrap(by = "RACE", nrow = 1) +
+  tm_layout(legend.text.size = 0.8,
+            legend.title.size=1.2,
+            panel.labels = c("AZJACI", "CZARNI", "LATYNOSI", "BIALI"))
+
+race_maps
+```
+
+```{r}
+#| message: false
+#| warning: false
+tmap_save(race_maps, "results/dc_race1990.svg")
+```
+
+> Wykonaj mapy zróżnicowania rasowo-etnicznego oraz rozmieszczenia grup rasowo-etnicznych dla roku 2020.
+
+## Wizualizacja wyników z pakietem ggplot2
+
+```{r}
+library(ggplot2)
+ggplot(data = out_ct) +
+  geom_sf(aes(fill = hill)) +
+  scale_fill_binned(type = "viridis") + 
+  labs(title = "District of Columbia, 1990") + 
+  theme_bw() +
+  theme(legend.position="bottom")
+```
+
+```{r}
+library(ggplot2)
+ggplot(data = race_data) +
+  geom_sf(aes(fill = PERC)) +
+  facet_wrap(~RACE, nrow = 1) + 
+  scale_fill_distiller(palette = "Oranges", trans = "reverse") + 
+  labs(title = "District of Columbia, 1990") + 
+  theme_bw() +
+  theme(legend.position="bottom")
+```

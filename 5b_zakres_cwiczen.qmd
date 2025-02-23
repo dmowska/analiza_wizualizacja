@@ -1,0 +1,62 @@
+
+# Zakres ćwiczeń
+
+-   **Ćwiczenie 1:** Wprowadzenie do tematyki ćwiczeń. Omówienie założeń projektu oraz organizacja pracy grupowej.
+
+-   **Ćwiczenie 2:** Opracowanie narzędzi w R do obliczania miar segregacji oraz zróżnicowania rasowo-etnicznego.
+
+    -   Cel ćwiczenia: stworzenie zestawu narzędzi, które posłużą obliczeniu tradycyjnych miar segregacji oraz zróżnicowania rasowego. Narzędzia te będą wykorzystywane na kolejnych ćwiczeniach.
+
+-   **Ćwiczenie 3:** Źródła danych o rasowo-etnicznej strukturze ludności.
+
+    -   Cel ćwiczenia: przygotowanie danych do analizy obejmujące: selekcję danych dla analizowanego hrabstwa, reklasyfikację kategorii rasowo-etnicznych oraz agregację danych do obszarów spisowyh. Dane te będą podstawą wykonania pozostałych ćwiczeń.
+
+-   **Ćwiczenie 4:** Wykorzystanie tradycyjnych miar segregacji oraz zróżnicowania rasowego w analizie rasowo-etnicznej struktury ludności w wybranym hrabstwie.
+
+    -   Cel ćwiczenia: obliczenie miar segregacji oraz zróżnicowania rasowo-etnicznego dla analizowanego hrabstwa wykorzystując dane zaagregowane do bloków spisowych oraz obszarów spisowych. W trakcie ćwiczenia zostaną wykorzystane narzędzia przygotowane w Ćwiczeniu 2 oraz dane przygotowane w ćwiczeniu 3.
+
+-   **Ćwiczenie 5:** Opracowanie posteru przedstawiającego zmiany poziomu segregacji i zróżnicowania rasowo-etnicznego w wybranym hrabstwie w latach 1990-2020.
+
+    -   Cel ćwiczenia: każda grupa przygotowuje 1 poster w formacie A0, pionowym przedstawiający zmiany w rasowo-etnicznej strukturze ludności, w tym poziomu segregacji oraz zróżnicowania.
+
+-   **Ćwiczenie 6:** Przestrzenny rozkład grup rasowo-etnicznych w wybranym hrabstwie.
+
+    -   Cel ćwiczenia: analiza przestrzennego rozmieszczenia grup rasowo-etnicznych w wybranym hrabstwie obejmująca procentowy udział grup rasowo-etnicznych oraz wartości wskaźnika zróżnicowania rasowo-etnicznego (entropia).
+    -   W ćwczeniu zostaną wykorzystane dane na poziomie obszarów spisowych (*census tract*). Wyniki ćwiczenia zostaną zaprezentowane także w postaci map.
+    -   Uwaga! Ćwiczenie wymaga transformacji danych zagregowanych do obszarów spisowych z lat 1990, 2000, 2010 do granic z 2020 roku. Do wykonania ćwiczenia potrzebne są dane przygotowane przez innych członków grupy. W tym celu zostanie wykorzystana metoda powierzchniowo-wagowa.
+
+-   **Ćwiczenie 7:** Przestzenny rozkład segregacji rasowo-etnicznej w wybranym hrabstwie.
+
+    -   Cel ćwiczenia: wizualizacja przestrzennego rozkładu segregacji rasowo-etnicznej obliczonej dla każdego obszaru spisowego. Wyniki zostaną przedstawione w postaci map segregacji, zróżnicowania oraz klasyfikacji na typy segregacji/zróżnicowania rasowo-etnicznego.
+
+-   **Ćwiczenie 8:** Analiza zmian typów struktury rasowo-etnicznej ludności.
+
+    -   Cel ćwiczenia: Analiza zmian typów struktury rasowo-etnicznej ludności obejmuje klasyfikację obszarów spisowych na 13 typów struktury rasowo-etnicznej oraz analizę zmian typów między latami.
+    -   Uwaga! Analiza zmian między latami (1990-2000, 2000-2010, 2010-2020, 1990-2020) wymaga zestawienia danych przygotowanych przez różnych członków grupy.
+    -   Każdy uczestnik grupy wykonuje analizę zmian dla dwóch wybranych lat: 1990-2000, 2000-2010, 2010-2020 oraz 1990-2020.
+
+-   **Ćwiczenie 9:** Opracowanie prezentacji multimedialnej przedstawiającej analizę zmian przetrzennego rozkładu rasowo-etnicznej struktury ludności oraz zróżnicowania rasowo-etnicznego w hrabstwie w latach 1990-2020.
+
+    -   Cel ćwiczenia: każda grupa przygotowuje 10 minutową prezentację multimedialną przedstawiającą wyniki zmian przetrzennego rozkładu rasowo-etnicznej struktury ludności oraz zróżnicowania rasowo-etnicznego w hrabstwie w latach 1990-2020. W prezentacji zostaną wykorzystane wybrane wyniki z ćwiczeń 6-8.
+
+-   **Ćwiczenie 10:** Zastosowanie metod analizy krajobrazowej w analizie rasowo-etnicznej struktury ludności
+
+    -   Cel ćwiczenia: Analiza rasowo-etnicznej struktury ludności z zastosowaniem metod analizy krajobrazu.
+    -   Uwaga! Wykonanie ćwiczenia wymaga klasyfikacji przygotowanej w trakcie ćwiczenia 8 (13 typów rasowo-etnicznej struktury ludności).
+
+-   **Ćwiczenie 11:** Opracowanie posteru nt. *Analiza zmian rasowo-etnicznej struktury ludności w latach 1990-2020 w wybranym hrabstwie Stanów Zjednoczonych*
+
+    -   Cel ćwiczenia: każda grupa przygotowuje 1 poster w formacie A0, pionowym przedstawiający wyniki analizy zmian rasowo-etnicznej struktury ludności w wybranym hrabstwie.
+    -   Przy wykonywaniu posteru zostaną wykorzystane wyniki uzyskane w trakcie wykonywania projektu.
+
+-   **Ćwiczenie 12:** Opracowanie prezentacji nt. *Analiza zmian rasowo-etnicznej struktury ludności w latach 1990-2020 w wybranym hrabstwie Stanów Zjednoczonych*
+
+    -   Cel ćwiczenia: każda grupa przygotowuje 15-minutową prezentację multimedialną
+
+-   **Ćwiczenie 13 i 14:** Przedstawienie posterów i prezentacji multimedialnych.
+
+    -   Przedstawienie oraz dyskusja posterów oraz prezentacji multimedialnych przedstawionych przez każdą grupę.
+
+
+
+

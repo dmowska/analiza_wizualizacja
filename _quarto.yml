@@ -1,0 +1,59 @@
+project:
+  type: book
+
+book:
+  title: "Analiza i wizualizacja struktury ludności"
+  author: "Anna Dmowska"
+  date: "2/21/2025"
+  chapters:
+    - index.qmd
+    - part: "WPROWADZENIE"
+      chapters: 
+        - 1a_struktura_ludnosci.qmd
+        - 1b_analiza_struktury_ludnosci.qmd
+    - part: "DANE I METODY"
+      chapters: 
+        - 2a_dane.qmd
+        - 2b_przygotowanie_danych.qmd
+        - 2c_areal.qmd
+    - part: "FORMY PREZENTACJI"
+      chapters: 
+        - 3a_formy_prezentacji.qmd
+        - 3b_poster.qmd
+        - 3c_prezentacja.qmd  
+    - part: 4_analiza_w_r.qmd
+      chapters: 
+        - 4a_przygotowanie_danych.qmd
+        - 4b_miary_segregacji_hrabstwo.qmd
+        - 4c_analiza_struktury_ct.qmd
+        - 4d_miary_segregacji_ct.qmd
+        - 4e_klasyfikacja.qmd
+        - 4f_analiza_krajobrazowa.qmd
+    - part: "ĆWICZENIA"
+      chapters: 
+        - 5a_organizacja_projektu.qmd
+        - 5b_zakres_cwiczen.qmd
+        - cwiczenie_1.qmd
+        - cwiczenie_2.qmd
+        - cwiczenie_3.qmd
+        - cwiczenie_4.qmd
+        - cwiczenie_5.qmd
+        - cwiczenie_6.qmd
+        - cwiczenie_7.qmd
+        - cwiczenie_8.qmd
+        - cwiczenie_9.qmd
+        - cwiczenie_10.qmd
+        - cwiczenie_11.qmd
+        - cwiczenie_12.qmd
+        - cwiczenie_13.qmd
+
+  
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+editor: visual
+

@@ -1,0 +1,38 @@
+# Ćwiczenie 7
+
+Przed wykonaniem ćwiczenia należy zapoznać się z rozdziałem 12 (przykład z kodem R). 
+ 
+## Cel ćwiczenia
+
+Celem ćwiczenia jest wizualizacja przestrzennego rozkładu segregacji rasowo-etnicznej obliczonej dla każdego obszaru spisowego. Wyniki zostaną przedstawione w postaci map segregacji, zróżnicowania oraz klasyfikacji na typy segregacji/zróżnicowania rasowo-etnicznego.
+
+## Wykorzystane dane
+
+-   \[hrabstwo\]\_blocks_1990_attr.csv zawierający informacje o strukturze rasowo-etnicznej ludności na poziomie bloków spisowych. Pole GISJOIN_T zawiera identyfikator obszaru spisowego.
+
+-   \[hrabstwo\]\_tracts.gpkg zawierający granice obszarów spisowych dla analizowanego roku.
+
+> W tym ćwiczeniu nie możemy użyć granic obszarów spisowych ujednoliconych między latami. Wynikowe mapy pokazujące rozkład przestrzenny segregacji rasowo-etnicznej w danym roku nie będą zatem w pełni porównywalne ze względu na zmieniające się granice.
+
+> Dlaczego nie możemy użyć granic obszarów spisowych ujednoliconych między latami?
+
+## Zadanie
+
+-   Wykorzystując dane dla wybranego hrabstwa dla analizowanego roku, oblicz miary segregacji rasowej (H)) oraz zróżnicowania rasowego (E, Estd) na poziomie obszarów spisowych.
+
+-   Na podstawie wartości H oraz Estd wykonaj klasyfikację typów zróżnicowania/segregacji rasowo-etnicznej.
+
+## Wyniki
+
+-   geopaczka \[hrabstwo\]\_tracts_seg_div.gpkg zawierającą wartości wskaźnika H, E, Estd oraz wyniki klasyfikacji na poziomie obszarów spisowych.
+
+    -   Geopaczkę należy zapisać w folderze results
+
+-   Opracowanie wyników powinno zawierać:
+
+    -   mapę pokazującą rozkład wartości wskaźnika H na poziomie obszarów spisowych
+    -   mapę pokazujące rozkład wartości entropii standaryzowanej na poziomie obszarów spisowych.
+    -   mapę z typami struktury rasowo-etnicznej
+    -   podsumowanie, ile obszarów spisowych występowało w danym typie struktury rasowo-etnicznej. Uwaga! Dla każdego roku użyty został inny zestaw granic, zatem wyniki te nie są w pełni porównywalne między latami.
+
+-   Wszystkie mapy należy zapisać w pliku svg w folderze results/figures

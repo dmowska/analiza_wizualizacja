@@ -1,0 +1,43 @@
+# Ćwiczenie 6
+
+W ćwiczeniu zostnie przeprowadzona **analiza rasowo-etnicznej struktury ludności na poziomie obszarów spisowych.**  Przed wykonaniem ćwiczenia należy zapoznać się z rozdziałem 5 oraz 11 (przykład z kodem R). 
+
+## Cel ćwiczenia
+
+Celem ćwiczenia jest określenie przestrzennego rozkładu grup rasowo-etnicznych oraz poziomu zróżnicowania rasowo-etnicznego wewnątrz hrabstwa. Analiza zostanie przeprowadzona na poziomie obszarów spisowych (ang. *census tracts*). Dla każdego obszaru spisowego zostanie określony procentowy udział grup rasowo-etnicznych oraz zostaną wyliczone miary zróżnicowania rasowo-etnicznego.
+
+## Wykorzystane dane
+
+-   \[hrabstwo\]\_tract_attr.gpkg - w ćwiczeniu zostana wykorzystane dane na poziomie obszarów spisowych (*census tracts*). Geopaczka zawiera granice obszarów spisowych wraz z przypisaną informacją o rasowo-etnicznej strukturze ludności.
+
+## Zadanie
+
+### Standaryzacja danych między latami
+
+Granice obszarów spisowych zmieniały się pomiędzy latami. Aby analiza porównawcza między latami 1990-2020 była możliwa, dane z roku 1990, 2000, 2010 trzeba najpierw prztransformować do granic z 2020 roku. W tym celu zostanie wykorzystana metoda powierzchniowo-wagowa.
+
+Wyniki tego etapu zostaną zapisane w geopaczce \[hrabstwo\]\_tracts_areal.gpkg
+
+### Przestrzenny rozkład grup rasowo-etnicznych
+
+-   Wykorzystując dane przetransformowane do granic z 2020 roku, proszę obliczyć procentowy udział grup rasowo-etnicznych w każdym obszarze spisowym.
+-   Proszę wykonać mapy dla 4 grup rasowo-etnicznych (biali, czarni, Azjaci, Latynosi) przedstawiające procentowy udział grupy w obszarze spisowym.
+-   Mapy należy zapisać w formacie svg oraz png w folderze results/figures.
+
+### Przestrzenny rozkład wartości zróżnicowania rasowo-etnicznego
+
+-   Wykorzystując dane przetransformowane do granic z 2020 roku, proszę obliczyć entropię, entropię standaryzowaną oraz liczbę Hilla dla każdego obszaru spisowego.
+-   Proszę przedstawić na mapie przestrzenny rozkład wartości liczby Hilla w analizowanym hrabstwie.
+-   Mapę należy zapisać w formacie svg oraz png w folderze results/figures.
+
+## Wyniki
+
+-   geopaczka \[hrabstwo\]\_tracts_areal.gpkg zawierająca dane przetransformowane do granic z 2020 roku
+
+    -   geopaczkę należy zapisać w folderze data/data_geo
+
+-   geopaczka \[hrabstwo\]\_results.gpkg - zawierającą procentowy udział grup rasowo-etnicznych oraz miary zróżnicowania obliczone dla każdego obszaru spisowego.
+
+    -   geopaczkę należy zapisać w folderze results
+
+-   mapy zapisane w formacie svg/png w folderze results/figures.

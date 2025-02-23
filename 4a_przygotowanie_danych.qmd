@@ -1,0 +1,162 @@
+# Przygotowanie danych 
+
+W poniższym przykładzie zostaną przygotowane dane dla obszaru District of Columbia dla 1990 i 2020 roku.
+
+## Przygotowanie danych dla 1990 roku
+
+### Etap 1: Wyselekcjonowanie danych atrybutowych o strukturze ludności dla wybranego hrabstwa. {.unnumbered}
+
+```{r}
+dane_attr = read.csv("data/dane_atrybutowe/blocks1990.csv")
+```
+
+```{r}
+county_attr = dane_attr[dane_attr$COUNTY_CODE == '11001',]
+```
+
+### Etap 2: Agregacja kategorii rasowo-etnicznych {.unnumbered}
+
+```{r}
+#| message: false
+#| warning: false
+library(dplyr)
+county_blocks_race = county_attr %>% 
+  mutate(GISJOIN = GISJOIN,
+         GISJOIN_T = GISJOIN_T,
+         WHITE = ET2001,
+         BLACK = ET2002,
+         AM = ET2003,
+         ASIAN = ET2004,
+         OTHER = ET2005,
+         HISPANIC = ET2006 + ET2007 + ET2008 + ET2009 + ET2010,
+         .keep = "none")
+```
+
+```{r}
+list_race = c("WHITE", "BLACK", "ASIAN", "HISPANIC", "AM", "OTHER")
+county_blocks_race$POP = apply(county_blocks_race[, list_race], 1, sum, na.rm = TRUE)
+```
+
+```{r}
+write.csv(county_blocks_race, "data/data_attr/dc_blocks_1990_attr.csv", row.names = FALSE)
+```
+
+### Etap 3: Agregacja danych z bloków spisowych do obszarów spisowych (census tract). {.unnumbered}
+
+```{r}
+county_tracts_race = county_blocks_race[, -1] %>% 
+  group_by(GISJOIN_T) %>% 
+  summarise_all(.funs = "sum", na.rm = TRUE)
+```
+
+```{r}
+write.csv(county_tracts_race, "data/data_attr/dc_tracts_1990_attr.csv", row.names = FALSE)
+```
+
+### Etap 4: Wyselekcjonowanie danych przestrzennych dla wybranego hrabstwa. {.unnumbered}
+
+```{r}
+#| message: false
+#| warning: false
+library(sf)
+dane_geo = st_read("data/dane_przestrzenne/tracts1990.gpkg")
+```
+
+```{r}
+county_geo = dane_geo[dane_geo$CNT_CODE == '11001',]
+```
+
+```{r}
+#| eval: false
+st_write(county_geo, "data/data_geo/dc_tracts.gpkg", layer = "tract_1990")
+```
+
+### Etap 5: Połączenie danych atrybutowych i przestrzennych. {.unnumbered}
+
+```{r}
+county_geo_attr = left_join(county_geo, county_tracts_race, by = c("GISJOIN" = "GISJOIN_T"))
+```
+
+```{r}
+#| eval: false
+st_write(county_geo_attr, "data/data_geo/dc_tracts_attr.gpkg", layer = "tract_attr_1990")
+```
+
+## Prrzygotowanie danych dla 2020 roku
+
+### Etap 1: Wyselekcjonowanie danych atrybutowych o strukturze ludności dla wybranego hrabstwa. {.unnumbered}
+
+```{r}
+dane_attr = read.csv("data/dane_atrybutowe/blocks2020.csv")
+```
+
+```{r}
+county_attr = dane_attr[dane_attr$COUNTY_CODE == '11001',]
+```
+
+### Etap 2: Agregacja kategorii rasowo-etnicznych. {.unnumbered}
+
+```{r}
+#| eval: false
+library(dplyr)
+county_blocks_race = county_attr %>% 
+  mutate(GISJOIN = GISJOIN,
+         GISJOIN_T = GISJOIN_T,
+         WHITE = U7C005,
+         BLACK = U7C006,
+         AM = U7C007,
+         ASIAN = U7C008 + U7C009,
+         OTHER = U7C010 + U7C011,
+         HISPANIC = U7C002,
+         .keep = "none")
+```
+
+```{r}
+list_race = c("WHITE", "BLACK", "ASIAN", "HISPANIC", "AM", "OTHER")
+county_blocks_race$POP = apply(county_blocks_race[, list_race], 1, sum, na.rm = TRUE)
+```
+
+```{r}
+write.csv(county_blocks_race, "data/data_attr/dc_blocks_2020_attr.csv", row.names = FALSE)
+```
+
+### Etap 3: Agregacja danych z bloków spisowych do obszarów spisowych (census tract). {.unnumbered}
+
+```{r}
+county_tracts_race = county_blocks_race[, -1] %>% 
+  group_by(GISJOIN_T) %>% 
+  summarise_all(.funs = "sum", na.rm = TRUE)
+```
+
+```{r}
+write.csv(county_tracts_race, "data/data_attr/dc_tracts_2020_attr.csv", row.names = FALSE)
+```
+
+### Etap 4: Wyselekcjonowanie danych przestrzennych dla wybranego hrabstwa. {.unnumbered}
+
+```{r}
+library(sf)
+dane_geo = st_read("data/dane_przestrzenne/tracts2020.gpkg")
+```
+
+```{r}
+county_geo = dane_geo[dane_geo$CNT_CODE == '11001',]
+```
+
+```{r}
+#| eval: false
+st_write(county_geo, "data/data_geo/dc_tracts.gpkg", layer = "tract_2020")
+```
+
+### Etap 5: Połączenie danych atrybutowych i przestrzennych. {.unnumbered}
+
+```{r}
+county_geo_attr = left_join(county_geo, county_tracts_race, by = c("GISJOIN" = "GISJOIN_T"))
+```
+
+```{r}
+#| eval: false
+st_write(county_geo_attr, "data/data_geo/dc_tracts_attr.gpkg", layer = "tract_attr_2020", append = TRUE)
+```
+
+> Proszę przygotować dane dla lat 2000, 2010.

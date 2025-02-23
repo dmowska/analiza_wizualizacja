@@ -1,0 +1,175 @@
+# Miary zróżnicowania i segregacji 
+
+W nieniejszym ćwiczeniu wykorzystane zostaną tradycyjne miary segregacji oraz zróżnicowania rasowo-etnicznego do analizy rasowo-etnicznej struktury ludności w wybranym hrabstwie. 
+
+## Wprowadzenie
+
+Obliczenie miar segregacji rasowej wymaga podziału obszaru na mniejsze jednostki spisowe.
+
+![Rycina 1. Zróżnicowanie oraz segregacja rasowa w analizowanym obszarze (np. dla całego miasta)](figures/3_ex1.png)
+
+## Miary segregacji i zróżnicowania w R
+
+Przed przystąpieniem do obliczeń należy wywołać wszystkie poniższe funkcje.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Pokaż kod funkcji"
+
+########## Funkcja obliczająca entropię 
+
+#proportions - wektor zawierający odsetek poszczególnych ras w ogólnej liczbie ludności (wartości od 0 do 1)
+#base - podstawa logarytmu, domyslnie exp(1) oznacza obliczenie logarytmu naturalnego 
+entropy_fnc = function(proportions, base = exp(1)) {
+  entr = -sum(ifelse(proportions > 0, proportions * log(proportions, base = base), 0))
+  return(entr)
+}
+
+##########  Funkcja obliczająca standaryzowaną entropię
+entropy_std_fnc = function(proportions, base = exp(1)) {
+  entr = -sum(ifelse(proportions > 0, proportions * log(proportions, base = base), 0)) #obliczenie entropii
+  entr_std = entr/log(length(proportions), base = base) #standaryzacja
+  return(entr_std)
+}
+
+########## Funkcja obliczająca wskaźnik teorii informacji H 
+hindex <- function(races) {
+#races_all to liczba osob w calym obszarze w podziale na grupy rasowo-etniczne
+races_all = apply(races, 2, sum, na.rm=TRUE)
+
+#liczba osob w calym obszarze
+pop = sum(races_all, na.rm=TRUE)
+
+#liczba osob w kazdej jednostce spisowej
+pop_i = apply(races, 1, sum, na.rm=TRUE)
+
+#odsetek osob w danej grupy rasowo-etnicznej w kazdej jednostce spisowej
+proportions = races/pop_i
+
+#odsetek osob w danej grupy rasowo-etnicznej w calym obszarze
+proportions_all = races_all/sum(races_all, na.rm = TRUE)
+
+#entropia dla kazdej jednostki spisowej
+ent_i = apply(proportions, 1, entropy_fnc)
+
+#entropia dla calego obszaru
+ent = entropy_fnc(proportions_all) 
+
+#obliczenie H
+hind = sum(pop_i*(ent-ent_i)/(ent*pop), na.rm=TRUE)
+return(hind)
+}
+
+##########  Funkcja obliczająca wskaźnik niepodobieństwa D
+# a - liczba osob grupy 1 w jednostce spisowej, b - liczba osob gruy 2 w jednostce spisowej
+d_ind = function(a, b) {
+  d = 0.5*sum(abs(a/sum(a, na.rm=TRUE) - b/sum(b, na.rm=TRUE)))
+  return(d)
+}
+```
+
+## Przykład: Zróżnicowanie oraz segregacja rasowa w District of Columbia w 2020 roku
+
+W poniższym przykładzie zostaną obliczone miary segregacji oraz zróżnicowania rasowo-etnicznego używając danych na poziomie bloków spisowych z 2020 roku dla obszaru District of Columbia.
+
+Tabela przedstawia dane dotyczące struktury rasowo-etnicznej dla bloków spisowych dla 6 kategorii rasowo-etnicznych (WHITE, BLACK, ASIAN, HISPANIC, AM, OTHER).
+
+```{r}
+dat <- read.csv("data/data_attr/dc_blocks_2020_attr.csv")
+```
+
+```{r}
+head(dat)
+```
+
+### Rasowo-etniczna struktura ludności w analizowanym obszarze
+
+```{r}
+# Wty miejscu podajemy nazwy kolumn dla poszczegolnych grup rasowo-etnicznych zgodne z wczytanym wczesniej plikiem csv
+list_race <- c("WHITE", "BLACK", "ASIAN", "HISPANIC", "AM", "OTHER")
+```
+
+#### Liczba ludności w podziale na grupy rasowo-etniczne w analizowanym obszarze w 2020 roku. {.unnumbered}
+
+```{r}
+races_all  <- apply(dat[,list_race], 2, sum, na.rm = TRUE)
+```
+
+```{r}
+races_all
+```
+
+#### Liczba ludności w analizowanym obszarze w 2020 roku.{.unnumbered}
+
+```{r}
+pop = sum(races_all)
+```
+
+#### Procentowy udział poszczególnych grup rasowo-etnicznych w analizowanym obszarze w 2020 roku. {.unnumbered}
+
+```{r}
+perc_all <- races_all/sum(races_all)
+round(perc_all*100, 2)
+```
+
+### Analiza zróżnicowania oraz segregacji rasowo-etnicznej na podstawie danych z bloków spisowych
+
+#### Obliczenie entropii na podstawie bloków spisowych {.unnumbered}
+
+> **Entropia jest miarą zróżnicowania całego obszaru (np. hrabstwa).** Musimy zatem najpierw zsumować dane dotyczące struktury rasowo-etnicznej całego obszaru, a następnie obliczyć odsetek poszczególnych ras w ogólnej liczbie ludności.
+
+```{r}
+races_all  <- apply(dat[,list_race], 2, sum, na.rm = TRUE) #races_all zawiera liczbę osob wg ras dla całego obszaru
+perc <- races_all/sum(races_all) #Odseted osob poszczegolnych ras dla calego obszaru
+perc <- perc[list_race] #wybierz tylko wartosci dla ras
+perc
+```
+
+Wektor *perc* zawiera dane, które należy podstawić do obliczenia entropii.
+
+```{r}
+ent  <- entropy_fnc(perc)
+ent
+```
+
+#### Obliczenie entropii standaryzowanej na podstawie bloków spisowych {.unnumbered}
+
+```{r}
+ent_std <- entropy_std_fnc(perc)
+ent_std
+```
+
+#### Obliczanie wskaźnika teorii informacji H na podstawie bloków spisowych {.unnumbered}
+
+```{r}
+races = dat[, list_race]
+h = hindex(races)
+h
+```
+
+#### Obliczenie wskaźnika niepodobieństwa D na podstawie bloków spisowych {.unnumbered}
+
+```{r}
+d_wb <- d_ind(dat$WHITE, dat$BLACK)
+```
+
+```{r}
+d_wa <- d_ind(dat$WHITE, dat$ASIAN)
+```
+
+```{r}
+d_wl <- d_ind(dat$WHITE, dat$HISPANIC)
+```
+
+```{r}
+d_bl <- d_ind(dat$BLACK, dat$HISPANIC)
+```
+
+### Podsumowanie miar segregacji na poziomie bloków spisowych
+
+```{r}
+out <- round(c(entropia = ent, entropia_std = ent_std, H = h, Dwb = d_wb, Dwa = d_wa, Dwl = d_wl, Dbl = d_bl), 3)
+out
+```
+
+> Wykorzystując powyższy kod proszę obliczyć entropię, entropię standaryzowaną, wskaźnik teorii informacji H oraz wskaźnik niepodobieństwa D wykorzystując dane zaagregowane do obszarów spisowych (census tract).

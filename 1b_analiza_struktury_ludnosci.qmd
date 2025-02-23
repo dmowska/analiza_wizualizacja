@@ -1,0 +1,134 @@
+# Analiza rasowo-etnicznej struktury ludności
+
+## Aktualne podejścia do analizy rasowo-etnicznej struktury ludności
+
+Rasowo-etniczna struktura ludności opisywana jest przez dwie koncepcje:
+
+-   **segregację rasowo-etniczną** (ang. *residential segregation*), która jest **koncepcją przestrzenną** opisującą, w jaki sposób ludzie różnych ras i grup etnicznych są przestrzennie rozmieszczeni w analizowanym obszarze. Klasyczna definicja segregacji rasowo-etnicznej określa *"stopień, w jakim dwie lub więcej grup żyją oddzielnie od siebie, w różnych częściach miasta."* (Massey i Denton, 1988)
+
+-   **zróżnicowanie rasowo-etniczne** (ang. *racial diversity*), które jest **koncepcją nieprzestrzenną** opisującą poziom niejednorodności rasowo-etnicznej struktury ludności w analizowanym obszarze.
+
+![](figures/2koncepcje.png)
+
+Obszar o dużej segregacji rasowo-etnicznej przedstawiony jest na rysunku A. Wysokim zróżnicowanie rasowo-etniczne ilustruje przykład A i B. Na obu rysunkach znajduje się po 5 ludzików żółtych, zielonych, czerwonych oraz fioletowych. Obie koncepcje są opisywane za pomocą jednoliczbowych wskaźików obliczanych dla całego miasta na podstawie danych tabelarycznych
+
+## Miary segregacji oraz zróżnicowania rasowo-etnicznego.
+
+Tradycyjne miary segregacji oraz zróżnicowania rasowo-etnicznego obliczane są na podstawie danych tabelarycznych przedstawiających liczbę osób wg kategorii rasowo-etnicznych. Miary te obliczane są na poziomie hrabstw lub miast.
+
+![](figures/miary.png)
+
+## Miary zróżnicowania rasowo-etnicznego
+
+Obliczenie miar zróżnicowania rasowo-etnicznego wymaga zsumowania danych ze wszystkich jednostek spisowych, tak aby uzyskać liczbę ludności wg grup rasowo-etnicznych w całym obszarze analizy (np. 80W, 80B, 80A, 80L).
+
+### Entropia
+
+Powszechnie stosowaną miarą zróżnicowania jest entropia obliczana według wzoru:
+
+$$E = -\sum p_{k} \log p_{k}$$
+
+gdzie,
+
+-   $p_k$ - odsetek osób w danej grupie rasowo-etnicznej zamieszkującej analizowany obszar
+-   $log$ - logarytm użyty do obliczenia entropii; w tradycyjnym podejściu do analizy zróżnicowania rasowo-etnicznego stosuje się logarytm naturalny.
+
+*Obliczenia należy wykonać dla jednostek dla których liczba ludnosci jest większa od 0*.
+
+![](figures/entropia.png)
+
+Minimalna wartość entropii wynosi 0, w przypadku gdy obszar jest zamieszkały wyłącznie przez jedną grupę rasowo-etniczną.
+
+Maksymalna wartość entropii obliczana jest jako $E_{max} = log(K)$, gdzie K to liczba grup rasowo-etnicznych. Np. przy 4 grupach maksymalna wartość entropii wyniesie 1.39, a przy 6 grupach 1.79. Wartość maksymalną otrzymujemy, przy równym odsetku wszystkich grup rasowo-etnicznych.
+
+### Entropia standaryzowana
+
+Dla celów porównawczych często stosuje się **entropię standaryzowaną** ($E_{std}$), która przyjmuje wartości od 0 do 1 (0 - obszar jest zamieszkiwany jest przez jedną grupę, 1 - udział poszczególnych grup jest taki sam).
+
+Entropia standaryzowana obliczana jest według wzoru:
+
+$$E_{std} = \frac{E}{E_{max}}$$
+
+gdzie $E$ - oznacza entropię, a $E_{max}$ oznacza entropię maksymalną.
+
+Entropia obliczana jest według wzoru: $$E = -\sum p_{k} \log p_{k}$$
+
+Entropia maksymalna obliczana jest $E_{max} = log(K)$, gdzie K to liczba grup rasowo-etnicznych.
+
+### Liczba Hilla
+
+Innym sposobem wyrażenia zróżnicowania rasowo-etnicznego jest liczba Hilla. Liczba Hilla interpretowana jest jako liczba grup rasowo-etnicznych ze znaczącym udziałem w analizowanym obszarze.
+
+Liczba Hilla obliczana jest według wzoru:
+
+$$N_H = a^E$$
+
+gdzie,
+
+-   $a$ - podstawa logarytmu użytego do obliczenia entropii (dla logarytmu naturalnego a = 2.718282)
+-   $E$ - wartość entropii
+
+## Miary segregacji rasowo-etnicznej
+
+Obliczenie wskaźników segregacji rasowej wymaga podzielenia obszaru na mniejsze jednostki. Wartość wskaźnika zależy od przyjętego podziału na jednostki przestrzenne.
+
+### Wskaźnik niepodobieństwa D
+
+Wskaźnik niepodobieństwa D określa poziom segregacji między dwoma grupami. Wskaźnik ten mierzy względną separację lub integrację dwóch grup zamieszkujących poszczególne dzielnice miasta.
+
+Wskaźnik D przyjmuje wartości z zakresu od 0 do 1.
+
+-   D = 0: dwie grupy rasowo-etniczne rozmieszczone są w tych samych proporcjach we wszystkich dzielnicach miasta; wskazuje to całkowitą integrację.
+
+-   D = 1: każda dzielnica zamieszkiwana jest tylko przez jedna grupę rasowo-etniczną; oznacza to całkowitą segregację, w której członkowie jednej grupy znajdują się w zupełnie innych dzielnicach niż członkowie drugiej grupy.
+
+Wartości wskaźnika D między 0 a 0.3 określają małą segregację, 0.3 - 0.6 - średnią, a wartości powyżej 0.6 oznaczają dużą segregację.
+
+Wskaźnik niepodobieństwa D obliczany jest według wzoru:
+
+$$D = \frac{1}{2}\sum_{i}^{N}\left\lvert \frac{a_{i}}{A} - \frac{b_{i}}{B} \right\rvert$$
+
+-   $a_{i}$ - liczba ludności grupy 1 w jednostce spisowej $i$
+-   $A$ - liczba ludności grupy 1 w analizowanym obszarze
+-   $b_{i}$ - liczba ludności grupy 2 w jednostce spisowej $i$
+-   $B$ - liczba ludności grupy 2 w analizowanym obszarze
+
+### Wskaźnik teorii informacji H.
+
+Wskaźnik teorii informacji H stosuje się do określenia poziomu segregacji rasowo-etnicznej z uwzględnieniem wielu grup. Wskaźnik teorii informacji H mierzy różnicę między zróżnicowaniem rasowym (entropią) całego obszaru (np. miasta), a zróżnicowaniem poszczególnych dzielnic miasta w stosunku do zróżnicowania całego miasta. Dodatkowo różnica ta jest ważona liczbą ludności zamieszkałą w danym obszarze geograficznym (Massey i Denton, 1988; White, 1986; Reardon i Firebaugh, 2002).
+
+Wartość wskaźnika teorii informacji H mieści się w zakresie od 0 do 1.
+
+-   H = 0: struktura rasowo-etniczna każdej dzielnicy na które podzielono miasto, jest taka sama jak całego miasta (wtedy $E_i = E$); oznacza pełną integrację grup rasowo-etnicznych. 
+
+-   H = 1: każda dzielnica zamieszkała jest tylko przez jedną grupę rasowo-etniczną; oznacza pełną segregację rasową.
+
+Wskaźnik teorii informacji H obliczany jest według wzoru:
+
+$$H = \sum_{i=1}^{N}\left [ \frac{t_{i}(E - E_{i})}{ET} \right ]$$
+
+gdzie
+
+-   $E_{i}$ - entropia danej jednostki spisowej *i*,
+-   $E$ - entropia obliczona dla całego obszaru
+-   $t_{i}$ - liczba ludności danej jednostki spisowej *i*,
+-   $T$ - liczba ludności całego obszaru
+
+## Klasyfikacja rasowo-etnicznej struktury ludności
+
+Inną formą prezentacji rasowo-etnicznej struktury ludności jest sklasyfikowanie jednostek agregacji, tak aby reprezentowały różne typy struktury rasowo-etnicznej ludności. Przykładem zastosowania klasyfikacji jest projekt Mixed Metro (<https://mixedmetro.com/>) dostarczający mapy typów zróżnicowania rasowo-etnicznego dla lat 1990-2020 dla obszaru Stanów Zjednoczonych.
+
+Stosuje się różne kryteria klasyfikacji, np.:
+
+-   Procentowy udział poszczególnych grup rasowo-etnicznych
+-   Entropia oraz dominująca grupa rasowo-etniczna
+
+Klasyfikacja stosowana jest np. dla każdego obszaru spisowego w mieście. Wyniki mogą być przedstawione w postaci tabeli pokazującej procentowy udział jednostek sklasyfikowanych jako dany typ. Pozwala także przedstawić rasowo-etniczną strukturę na mapie. Nie pozwala jednak na bezpośrednie określenie poziomu segregacji rasowej.
+
+Przy zastosowaniu klasyfikacji wyróżnia się typy:
+
+-   mało zróżnicowane - obszary zdominowane przez jedną grupę rasowo-etniczną,
+-   średnio zróżnicowane - obszary zdominowane przez jedną grupę ze znaczącym udziałem innej grupy
+-   o dużym zróżnicowaniu - obszary, w których żadna grupa nie dominuje
+
+![](figures/klasyfikacja.png)

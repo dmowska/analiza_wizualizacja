@@ -1,0 +1,37 @@
+# Ćwiczenie 3
+
+W ćwiczeniu 3 zostaną omówione **źródła danych o rasowo-etnicznej strukturze ludności** oraz etapy przygotowania danych do dalszych analiz. Przed wykonaniem ćwiczenia należy zapoznać się z rozdziałem 3 i 4 (opis danych i etapów ich przygotowania) oraz 9 (przykład z kodem R). 
+
+## Cel ćwiczenia
+
+Celem ćwiczenia jest przygotowanie danych do analizy obejmujące:
+
+-   selekcję danych dla analizowanego hrabstwa,
+-   reklasyfikację kategorii rasowo-etnicznych,
+-   agregację danych do obszarów spisowych
+
+Dane te będą podstawą wykonania pozostałych ćwiczeń.
+
+## Zadanie
+
+-   Proszę przygotować zestaw danych o rasowo-etnicznej strukturze ludności dla wybranego hrabstwa oraz roku.
+
+-   Etapy przygotowania danych do analizy zostały opisane w rozdziale: Dane/Przygotowanie danych.
+
+## Wyniki
+
+W wyniku przygotowania danych należy zachować 4 pliki zapisane w dwóch folderach:
+
+-   folder data_attr
+
+    -   \[nazwa_hrabstwa\]blocks\[year\]\_attr.csv - zawierający dane o strukturze ludności na poziomie bloków spisowych
+
+    -   \[nazwa_hrabstwa\]tracts\[year\]\_attr.csv - zawierający dane o strukturze ludności na poziomie obszarów spisowych (census tracts)
+
+-   folder data_geo
+
+    -   \[nazwa_hrabstwa\]\_tracts.gpkg - zawierającą warstwy tracts\[year\] z granicami obszarów spisowych
+
+    -   \[nazwa_hrabstwa\]\_tracts_attr.gpkg - zawierającą warstwy tracts_attr\[year\] z granicami obszarów spisowych z dołączoną informacją o rasowo-etnicznej strukturze ludności.
+
+> Uwaga! Na koniec ćwiczenia proszę przygotować geopaczki zawierające 4 warstwy dla analizowanych lat.

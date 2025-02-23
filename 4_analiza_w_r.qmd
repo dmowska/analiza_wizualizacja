@@ -1,0 +1,14 @@
+# ANALIZA W R
+
+Niniejsza część przedstawia proces wykonania w R ***analizy zróżnicowania przestrzennego oraz zmienności czasowej rasowo-etnicznej struktury ludności*** na przykładzie danych dla Districtu of Columbia dla lat 1990 i 2020. 
+
+W każdym rozdziale (rozdziały 9 - 14) zamieszczono szczegółowe wyjaśnienie poszczególnych zagadnień oraz kod R potrzebny do wykonania analiz i wizualizacji. Kod ten można wykorzystać przy wykonywaniu samodzielnych ćwiczeń zawartych w części ***ĆWICZENIA***.  
+
+W części ***Analiza w R *** uwzględniono: 
+
+- przygotowanie danych do analizy (*rozdział 9*)
+- wykorzystanie tradycyjnych miar segregacji oraz zróżnicowania rasowo-etnicznego do analizy rasowo-etnicznej struktury ludności (*rozdział 10*)
+- analizę i wizualizację rasowo-etnicznej struktury ludności na poziomie obszarów spisowych obejmującą przestrzenny rozkład grup rasowo-etnicznych, miar zróżnicowania oraz segregacji rasowo-etnicznej (*rozdział 11, rozdział 12*) 
+- analizę zmian typów struktury rasowo-etnicznej ludności (*rozdział 13*)
+- zastosowanie metod analizy krajobrazowej w analizie rasowo-etnicznej struktury ludności. (*rozdział 14*) 
+

@@ -1,0 +1,20 @@
+# O skrypcie {.unnumbered}
+
+Skrypt zawiera materiały do ćwiczeń z przedmiotu ***Analiza i wizualizacja struktury ludności***
+
+## Struktura skryptu
+
+Skrypt składa się z kilku części:
+
+-   **część 1**: Wprowadzenie do tematyki zajęć
+-   **część 2**: Analiza w R - kod R zawierający przykłady wykonania analz
+-   **część 3**: Zestaw ćwiczeń do samodzielnego wykonania
+
+## Dane
+
+Dane wykorzystywane w skrypcie:
+
+-   dane atrybutowe zawierające informacje o strukturze przestrzennej w wybranych hrabstwach \[[POBIERZ](https://dmowska-dydaktyka.web.amu.edu.pl/data/uploads/analiza_wizuzalizacja_ludnosci/data/dane_atrybutowe.zip)\]
+-   dane przestrzenne zawierające granice obszarów spisowych dla wybranych hrabstw \[[POBIERZ](https://dmowska-dydaktyka.web.amu.edu.pl/data/uploads/analiza_wizuzalizacja_ludnosci/data/dane_przestrzenne.zip)\]
+-   dane wykorzystywane w ćwiczeniu 2 do testowania i obliczania różnych miar segregacji i zróżnicowania rasowo-etnicznego \[[POBIERZ](https://dmowska-dydaktyka.web.amu.edu.pl/data/uploads/analiza_wizuzalizacja_ludnosci/data/miary.zip)\]
+-   Kod hrabstw ułatwiający selekcję odpowiednich danych \[[POBIERZ](https://dmowska-dydaktyka.web.amu.edu.pl/data/uploads/analiza_wizuzalizacja_ludnosci/data/hrabstwa.xls)\]

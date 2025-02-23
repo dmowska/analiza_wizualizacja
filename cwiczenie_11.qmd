@@ -1,0 +1,19 @@
+# Ćwiczenie 11
+
+Przed wykonaniem ćwiczenia należy zapoznać się z rozdziałem 6 i 7 opisującym formy prezentacji wyników badań, w tym tworzenie posterów naukowych. 
+
+## Cel ćwiczenia
+
+Celem ćwiczenia jest opracowanie posteru nt. *Analiza zróżnicowania przestrzennego oraz zmienności czasowej rasowo-etnicznej struktury ludności wybranego hrabstwa w Stanach Zjednoczonych w latach 1990-2020*
+
+## Wykorzystane dane
+
+-   Przy wykonywaniu posteru zostaną wykorzystane wyniki uzyskane w trakcie wykonywania projektu.
+
+## Zadanie
+
+-   każda grupa przygotowuje 1 poster w formacie A0, pionowym
+-   istotnym elementem przygotowania posteru jest odpowiednia selekcja materiału, który zostanie umieszczony na posterze
+-   poster należy zapisać w formacie PDF.
+-   przygotowane postery będą prezentowane na kolejnych zajęciach.
+-   Poster będzie oceniany. Za poster można otrzymać dwie oceny: ocenę wystawioną przez prowadzącego oraz średnią z ocen wystawionych przez uczestików zajęć.

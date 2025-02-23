@@ -1,0 +1,196 @@
+# Przygotowanie danych do analizy
+
+## Dane
+
+-   Dane zostały pobrane ze strony <http://nhgis.org>.
+
+-   W nieniejszym skrypcie zostaną wykorzystane dwa rodzaje danych:
+
+    -   Dane dotyczące struktury rasowo-etnicznej wybranych hrabstw zagregowane do bloków spisowych (ang. *blocks*) dla lat 1990, 2000, 2010, 2020 (dane_atrybutowe.zip)
+    -   Granice obszarów spisowych (ang. *census tracts*) dla wybranych hrabstw dla lat 1990, 2000, 2010, 2020 (dane_przestrzenne.zip)
+
+## Dane dotyczące struktury rasowo-etnicznej
+
+Dane dotyczące struktury rasowo-etnicznej wybranych hrabstw zagregowane do bloków spisowych zawierają następujące kolumny:
+
+-   ***GISJOIN*** - identyfikator danych na poziomie bloków spisowych, pozwalający na połączenie danych atrybutowych z danymi przestrzennymi
+-   ***GISJOIN_T*** - identyfikator danych na poziomie obszarów spisowych,
+
+    -   pole GISJOIN_T będzie wykorzystane do zagregowania danych z bloków spisowych do obszarów spisowych;
+    -   pole GISJOIN_T pozwala na połączenie danych atrybutowych z danymi przestrzennymi na poziomie obszarów spisowych.\
+-   ***COUNTY_CODE*** - kod hrabstwa składający się z dwóch elementów - kodu stanu oraz kodu hrabstwa.
+
+    -   Pozwala na identyfikację hrabstw w Stanach Zjednoczonych.
+    -   Kod zostanie użyty do wyselekcjonowania danych dla wybranego hrabstwa.
+
+-   ***STATEA*** - kod stanu
+-   ***COUNTYA*** - kod hrabstwa
+-   ***TRACTA*** - kod obszaru spisowego
+-   ***BLOCKA*** - kod bloku
+-   zestaw kolumn zawierający dane dotyczące rasowo-etnicznej struktury ludności.
+
+## Granice obszarów spisowych
+
+Dane zawierają m.in pola:
+
+-   ***GISJOIN*** - identyfikator danych na poziomie obszarów spisowych, pozwala na połączenie danych atrybutowych z danymi przestrzennymi na poziomie obszarów spisowych.
+
+    -   *Uwaga! Aby połączyć dane atrybutowe dla obszarów spisowych z danymi przestrzennymi należy użyć pola **GISJOIN_T** z plików tekstowych oraz pola **GISJOIN** w danych przestrzennych.*
+-   ***CNT_CODE*** - kod hrabstwa składający się z dwóch elementów - kodu stanu oraz kodu hrabstwa.
+
+    -   Pozwala na identyfikację hrabstw w Stanach Zjednoczonych.
+    -   Kod zostanie użyty do wyselekcjonowania danych dla wybranego hrabstwa. W danych w plikach tekstowych kod ten zapisany jest w kolumnie COUNTY_CODE.
+
+## Kategorie rasowo-etniczne w Spisach Ludności
+
+Podział na kategorie rasowo-etniczne zmieniał się między Spisami Ludności. W ćwiczeniach będziemy wykorzystywać podział na 6 grup:
+
+-   Osoby nie wykazujące pochodzenia Latynowskiego (Not Hispanic or Latino) w podziale na grupy rasowe:
+    -   (1) Biali,
+    -   (2) Czarni,
+    -   (3) Azjaci,
+    -   (4) Rdzenni Amerykanie,
+    -   (5) Pozostali (tj. osoby, które wskazały przynależność do więcej niż jednej grupy rasowo-etnicznej)
+-   (6) Latynosi (bez względu na grupę rasową)
+
+![](figures/rasy5.png)
+
+### Rok 1990 {.unnumbered}
+
+```{r}
+#| echo: false
+
+library(kableExtra)
+t = read.csv("files/race_categories.csv")
+dt = t[1:10,]
+
+kbl(dt) %>%
+  kable_paper("striped", full_width = F) %>%
+  row_spec(1, bold = T, color = "black", background = "#f8df1d") %>%
+  row_spec(2, bold = T, color = "black", background = "#6ebe44") %>%
+  row_spec(3, bold = T, color = "black", background = "#20a0f0") %>%
+  row_spec(4, bold = T, color = "black", background = "#f16667")  %>%
+  row_spec(5, bold = T, color = "black", background = "#7f0000")  %>%
+  row_spec(6:10, bold = T, color = "black", background = "#7e69af")
+```
+
+### Rok 2000 {.unnumbered}
+
+```{r}
+#| echo: false
+library(kableExtra)
+t = read.csv("files/race_categories.csv")
+dt = t[11:24,]
+rownames(dt) <- NULL
+
+kbl(dt) %>%
+  kable_paper("striped", full_width = F) %>%
+  row_spec(1, bold = T, color = "black", background = "#f8df1d") %>%
+  row_spec(2, bold = T, color = "black", background = "#6ebe44") %>%
+  row_spec(3, bold = T, color = "black", background = "#20a0f0") %>%
+  row_spec(4:5, bold = T, color = "black", background ="#f16667")  %>%
+  row_spec(6:7, bold = T, color = "black", background = "#7f0000")  %>%
+  row_spec(8:14, bold = T, color = "black", background = "#7e69af")
+```
+
+### Rok 2010 {.unnumbered}
+
+```{r}
+#| echo: false
+t = read.csv("files/race_categories.csv")
+dt = t[25:34,]
+rownames(dt) <- NULL
+
+kbl(dt) %>%
+  kable_paper("striped", full_width = F) %>%
+  row_spec(1:2, bold = T, color = "black", background = "white") %>%
+  row_spec(3, bold = T, color = "black", background = "#f8df1d") %>%
+  row_spec(4, bold = T, color = "black", background = "#6ebe44") %>%
+  row_spec(5, bold = T, color = "black", background = "#20a0f0") %>%
+  row_spec(6:7, bold = T, color = "black", background = "#f16667")  %>%
+  row_spec(8:9, bold = T, color = "black", background = "#7f0000")  %>%
+  row_spec(10, bold = T, color = "black", background = "#7e69af")
+```
+
+### Rok 2020 {.unnumbered}
+
+```{r}
+#| echo: false
+t = read.csv("files/race_categories.csv")
+dt = t[35:43,]
+rownames(dt) <- NULL
+
+kbl(dt) %>%
+  kable_paper("striped", full_width = F) %>%
+  row_spec(1, bold = T, color = "black", background = "white") %>%
+  row_spec(2, bold = T, color = "black", background = "#7e69af") %>%
+  row_spec(3, bold = T, color = "black", background = "#f8df1d") %>%
+  row_spec(4, bold = T, color = "black", background = "#6ebe44") %>%
+  row_spec(5, bold = T, color = "black", background = "#20a0f0") %>%
+  row_spec(6:7, bold = T, color = "black", background ="#f16667")  %>%
+  row_spec(8:9, bold = T, color = "black", background = "#7f0000")
+```
+
+## Przygotowanie danych do analizy
+
+Przygotowanie danych do analizy składa się z 5 etapów:
+
+-   **Etap 1: Wyselekcjonowanie danych atrybutowych o strukturze ludności dla wybranego hrabstwa.**
+
+    -   Dane atrybutowe zapisane są w 4 plikach csv: blocks1990.csv, blocks2000.csv, blocks2010.csv, blocks2020.csv
+    -   Z pliku dla danego roku należy wybrać dane dla wybranego hrabstwa. Selekcję należy wykonać posługując się kodem hrabstwa zapisanym w polu *COUNTY_CODE*
+
+-   **Etap 2: Agregacja kategorii rasowo-etnicznych.**
+
+    -   Podział na kategorie rasowo-etniczne zmieniał się między Spisami Ludności. W ćwiczeniach będziemy wykorzystywać podział na 6 grup:
+
+        -   Osoby nie wykazujące pochodzenia Latynowskiego (Not Hispanic or Latino) w podziale na grupy rasowe: Biali, Czarni, Azjaci, Rdzenni Amerykanie, Pozostali (tj. osoby, które wskazały przynależność do więcej niż jednej grupy rasowo-etnicznej)
+        -   Latynosi (bez względu na grupę rasową)
+
+    -   W tabelach w sekcji *Kategorie rasowo-etniczne w Spisach Ludności* zestawione zostały pola, które należy zaagregować.
+
+    -   Plik po agregacji powinien zawierać kolumny: GISJOIN, GISJOIN_T, oraz zaagregowane kategorie rasowo-etniczne: WHITE, BLACK, ASIAN, AM, OTHER, HISPANIC
+
+    -   Plik ze zagregowanymi kategoriami rasowo-etnicznymi należy zapisac jako [nazwa_hrabstwa]_[year]_blocks_attr.csv 
+
+-   **Etap 3: Agregacja danych z bloków spisowych do obszarów spisowych (*census tract*).**
+
+    -   W wyniku tego etapu dane na poziomie bloków spisowych zapisane w pliku [nazwa_hrabstwa]_[year]_blocks_attr.csv zostaną zaagregowane do obszarów spisowych (ang. *census tract*, większe jednostki spisowe)
+    -   Identyfikator obszarów spisowych znajduje się w polu GISJOIN_T. Należy zatem użyć pola GISJOIN_T, aby dane z bloków zaagregować do obszarów spisowych.
+    -   Zaagregowane dane należy zapisać w pliku [nazwa_hrabstwa]_[year]_tracts_attr.csv 
+
+-   **Etap 4: Wyselekcjonowanie danych przestrzennych dla wybranego hrabstwa.**
+
+    -   Granice obszarów spisowych dla lat 1990, 2000, 2010, 2020 zostały zapisane w pliku tracts\_\[year\].gpkg
+
+    -   Z pliku dla danego roku należy wybrać dane dla wybranego hrabstwa. Selekcję należy wykonać posługując się kodem hrabstwa zapisanym w polu *CNT_CODE*
+
+    -   Wyselekcjonowane dane należy zapisać w geopaczce \[nazwa_hrabstwa\]\_tracts.gpkg, nazwa warstwy tracts\[year\].
+
+        -   Uwaga! Na tym etapie należy utworzyć jedną geopaczkę dla hrabstwa zawierającą granice dla 4 lat.
+
+-   **Etap 5: Połączenie danych atrybutowych i przestrzennych.**
+
+    -   W tym etapie należy do granic obszarów spisowych (wynik wykonania etapu 4) dołączyć dane o strukturze ludności w obszarach spisowych (wynik wykonania etapu 3)
+
+    -   W pliku [nazwa_hrabstwa]_tracts_[year]_attr.csv identyfikator obszaru spisowego znajduje się w polu GISJOIN_T. W danych przestrzennych ([nazwa_hrabstwa].gpkg, nazwa warstwy tracts\[year\]) identyfikator obszaru spisowego znajduje się w polu GISJOIN.
+
+    -   połączone dane należy zapisać w geopaczce \[nazwa_hrabstwa\]\_tracts_attr.gpkg, nazwa warstwy tracts_attr\[year\]
+
+        -   Uwaga! Dane dla 4 lat należy zapisać w tej samej geopaczce.
+
+![](figures/data_prep.png)
+
+## Pliki wynikowe
+
+Podsumowując, w wyniku przygotowania danych należy zachować 4 pliki zapisane w dwóch folderach:
+
+-   folder data_attr
+
+    -   \[nazwa_hrabstwa\]_blocks_[year\]\_attr.csv - zawierający dane o strukturze ludności na poziomie bloków spisowych
+    -   \[nazwa_hrabstwa\]_tracts_[year\]\_attr.csv - zawierający dane o strukturze ludności na poziomie obszarów spisowych (census tracts)
+
+-   folder data_geo
+
+    -   \[nazwa_hrabstwa\]\_tracts.gpkg - zawierającą warstwy tracts\[year\] z granicami obszarów spisowych
+    -   \[nazwa_hrabstwa\]\_tracts_attr.gpkg - zawierającą warstwy tracts_attr\[year\] z granicami obszarów spisowych z dołączoną informacją o rasowo-etnicznej strukturze ludności.
