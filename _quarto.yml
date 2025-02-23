@@ -1,6 +1,8 @@
 project:
   type: book
 
+lang: pl
+
 book:
   title: "Analiza i wizualizacja struktury ludności"
   author: "Anna Dmowska"
@@ -47,13 +49,14 @@ book:
         - cwiczenie_12.qmd
         - cwiczenie_13.qmd
 
-  
+execute:
+  freeze: auto
+
+bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
-  pdf:
-    documentclass: scrreprt
+    theme: yeti
+    out-width: 400px
 
-editor: visual
-
+number-depth: 3
